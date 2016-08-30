@@ -1,0 +1,166 @@
+
+\documentclass[12pt,a4paper,oneside]{article}
+
+%+ Standard packages +++++++++++++++++++++++++++++
+\usepackage[top=2.0cm, bottom=2.0cm, left=2.4cm, right=2.4cm]{geometry}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage[english, ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{luaotfloat}
+\usepackage{lmodern}
+\usepackage{fontspec}								% sets font style
+	\setmainfont{Arial}								% CAUTION: needs to be compiled with 
+%\usepackage[scaled]{uarial}							% LuaLaTeX
+%\usepackage[light,condensed,math]{anttor}			
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{lipsum}
+
+
+%+ Document settings +++++++++++++++++++++++++++++
+
+% Modifying the title und maketitle-command -------------------------------
+\newenvironment{bold}{\bfseries}{}
+
+\usepackage{titling}
+\pretitle{\begin{center}\begin{bold}\Huge}
+\posttitle{\par\end{bold}\end{center}\vskip 0.5em}
+\preauthor{\begin{center} \large \lineskip 0.5em \begin{tabular}[t]{c}}
+\postauthor{\end{tabular}\par\end{center}}
+
+
+%- Modifying section and abstract headings ---------------------------------
+\definecolor{dwp-darkblue}{RGB}{0,69,134}
+\definecolor{dwp-lightblue}{RGB}{52,101,164}
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+{\color{dwp-darkblue}\normalfont\Large\bfseries}
+{\color{dwp-darkblue}\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\color{dwp-lightblue}\normalfont\large\bfseries}
+{\color{dwp-lightblue}\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+{\color{black}\normalfont\normalsize\bfseries}
+{\color{black}\thesubsubsection}{1em}{}
+
+
+%- Formatting the abstract environment. -----------------------------------
+%- Caution: Causes bad box warning which can be ignored --------------
+
+\renewenvironment{abstract}{%
+	\begin{minipage}{0.9\textwidth}
+		{\color{dwp-darkblue}\Large\textbf{Abstract}\newline\hspace*{-0.1cm}}}%
+	{\end{minipage}}
+
+
+
+%- Formatting block quote environment. ------------------------------------
+
+\renewenvironment{quote}{%
+	\begin{center}
+		\begin{minipage}{0.85\textwidth}\small}
+		{\end{minipage}
+	\end{center}}
+
+
+%- Formatting captions -----------------------------------------------------
+\usepackage[font=bf]{caption}
+
+
+%- Title and author of the paper ------------------------------------------
+\title{$title$}
+\author{$for(author)$$author$$sep$ \and $endfor$}
+\date{}											% has to be empty	
+
+%- needed, otherwise error in compiling ---------------------------------
+\def\tightlist{}
+\def\toprule{}
+\def\midrule{}
+\def\bottomrule{}
+
+\pagenumbering{arabic}	
+
+
+% ++ BEGINNING OF THE DOCUMENT +++++++++++++++++
+
+\begin{document}
+	\setlength{\parindent}{0em} 							% no indentation in new paragraphs
+
+	\maketitle
+	$if(abstract)$
+		\begin{abstract}
+			$abstract$
+		\end{abstract}
+	$endif$
+
+	\tableofcontents
+	\thispagestyle{empty}								% no numbering on first page
+	\newpage
+
+	\setcounter{page}{1}								% start counting from one
+$for(include-before)$
+$include-before$
+
+$endfor$
+$if(toc)$
+{
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+
+
+$if(lot)$
+\listoftables
+$endif$
+
+$if(lof)$
+\listoffigures
+$endif$
+$body$
+
+$if(natbib)$
+$if(bibliography)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+
+$endif$
+$endif$
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+
+$endif$
+
+$if(bibliography)$
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+$endif$
+
+$for(include-after)$
+$include-after$
+
+$endfor$
+
+\end{document}
+
+
+
+
+
+
+
+
