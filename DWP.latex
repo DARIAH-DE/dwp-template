@@ -1,4 +1,3 @@
-
 \documentclass[12pt,a4paper,oneside]{article}
 
 %+ Standard packages +++++++++++++++++++++++++++++
@@ -8,17 +7,21 @@
 \usepackage{geometry}
 \usepackage[english, ngerman]{babel}
 \usepackage[T1]{fontenc}
+\usepackage[sfdefault]{AlegreyaSans} %% Option 'black' gives heavier bold face
+%% The 'sfdefault' option to make the base font sans serif
+\renewcommand*\oldstylenums[1]{{\AlegreyaSansOsF #1}}
+
 \usepackage[utf8]{inputenc}
 %\usepackage{luaotfloat}
 \usepackage{lmodern}
-\usepackage{fontspec}								% sets font style
-	\setmainfont{Arial}								% CAUTION: needs to be compiled with 
-%\usepackage[scaled]{uarial}							% LuaLaTeX
+%\usepackage{fontspec}								% sets font style
+%	\setmainfont{Arial}							% CAUTION: needs to be compiled with 
+%\usepackage[scaled]{uarial}							% LuaLaTeX. Needs Arial installed on the computer.
 %\usepackage[light,condensed,math]{anttor}			
-\usepackage{graphicx}
+%\usepackage{graphicx}
 \usepackage{hyperref}
-\usepackage{longtable}
-\usepackage{lipsum}
+\usepackage{longtable, booktabs}
+\usepackage{graphicx,grffile}
 
 
 %+ Document settings +++++++++++++++++++++++++++++
@@ -55,18 +58,18 @@
 %- Formatting the abstract environment. -----------------------------------
 %- Caution: Causes bad box warning which can be ignored --------------
 
-\renewenvironment{abstract}{%
+\renewenvironment{abstract}[1]{%
 	\begin{minipage}{0.9\textwidth}
-		{\color{dwp-darkblue}\Large\textbf{Abstract}\newline\hspace*{-0.1cm}}}%
+		{\color{dwp-darkblue}\Large\textbf{Abstract}\newline}{#1}}%
 	{\end{minipage}}
 
 
 
 %- Formatting block quote environment. ------------------------------------
 
-\renewenvironment{quote}{%
+\renewenvironment{quote}[1]{%
 	\begin{center}
-		\begin{minipage}{0.85\textwidth}\small}
+		\begin{minipage}{0.85\textwidth}\small{#1}}
 		{\end{minipage}
 	\end{center}}
 
@@ -75,18 +78,25 @@
 \usepackage[font=bf]{caption}
 
 
-%- Title and author of the paper ------------------------------------------
+%- Title and author of the paper -------------------------------------------
 \title{$title$}
 \author{$for(author)$$author$$sep$ \and $endfor$}
 \date{}											% has to be empty	
 
-%- needed, otherwise error in compiling ---------------------------------
+%- needed, otherwise error in compiling -----------------------------------
 \def\tightlist{}
-\def\toprule{}
-\def\midrule{}
-\def\bottomrule{}
 
 \pagenumbering{arabic}	
+
+%- adjusting the space between items in different environments -------------
+%- see http://tex.stackexchange.com/questions/16793/global-setting-of-spacing-between-items-in-itemize-environment-for-beamer
+\let\tempEnuOne\enumerate
+\let\tempEnuTwo\endenumerate
+\renewenvironment{enumerate}{\tempEnuOne\addtolength{\itemsep}{-0.5\baselineskip}}{\tempEnuTwo}
+
+\let\tempItemOne\itemize
+\let\tempItemTwo\enditemize
+\renewenvironment{itemize}{\tempItemOne\addtolength{\itemsep}{-0.5\baselineskip}}{\tempItemTwo}
 
 
 % ++ BEGINNING OF THE DOCUMENT +++++++++++++++++
