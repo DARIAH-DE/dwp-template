@@ -2,27 +2,20 @@
 
 %+ Standard packages +++++++++++++++++++++++++++++
 \usepackage[top=2.0cm, bottom=2.0cm, left=2.4cm, right=2.4cm]{geometry}
-\usepackage[usenames,dvipsnames]{color}
+\usepackage[usenames]{color}
 \usepackage{setspace}
-\usepackage{geometry}
-\usepackage[english, ngerman]{babel}
-\usepackage[T1]{fontenc}
-\usepackage[sfdefault]{AlegreyaSans} %% Option 'black' gives heavier bold face
-%% The 'sfdefault' option to make the base font sans serif
-\renewcommand*\oldstylenums[1]{{\AlegreyaSansOsF #1}}
-
-\usepackage[utf8]{inputenc}
+\usepackage[english,ngerman]{babel}  %%% FIXME -> polyglossia
+\usepackage[utf8]{luainputenc}
 %\usepackage{luaotfloat}
-\usepackage{lmodern}
-%\usepackage{fontspec}								% sets font style
-%	\setmainfont{Arial}							% CAUTION: needs to be compiled with 
+\usepackage{fontspec}								% sets font style
+	\setmainfont{OpenSans}							% CAUTION: needs to be compiled with 
 %\usepackage[scaled]{uarial}							% LuaLaTeX. Needs Arial installed on the computer.
 %\usepackage[light,condensed,math]{anttor}			
 %\usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{longtable, booktabs}
 \usepackage{graphicx,grffile}
-
+\usepackage{parskip}
 
 %+ Document settings +++++++++++++++++++++++++++++
 
@@ -102,7 +95,7 @@
 % ++ BEGINNING OF THE DOCUMENT +++++++++++++++++
 
 \begin{document}
-	\setlength{\parindent}{0em} 							% no indentation in new paragraphs
+%	\setlength{\parindent}{0em} 							% no indentation in new paragraphs % parskip or koma?
 
 	\maketitle
 	$if(abstract)$
