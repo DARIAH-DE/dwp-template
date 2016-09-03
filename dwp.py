@@ -4,6 +4,7 @@ from subprocess import run
 from readchar import readkey
 import sys
 import os
+import platform
 
 
 def yn(*prompt, default=True):
@@ -45,6 +46,16 @@ def yn(*prompt, default=True):
             print(key, "\x08", sep="", end="", flush=True)
 
 
+def run_file(filename):
+    if platform.system() == 'Linux':
+        run(["xdg-open", filename])
+    elif platform.system() == 'Windows':
+        os.startfile(filename)
+    else:
+        run(["open", filename])
+
+
+
 def run_pandoc(filename, args):
     """
     Runs pandoc with appropriate arguments.
@@ -67,6 +78,11 @@ def run_pandoc(filename, args):
         args.append("--latex-engine=lualatex")
     if "--template" not in argnames:
         args.append("--template=DWP")
+
+    args.append("--filter=pandoc-citeproc")
+    if os.path.exists(basename + ".bib"):
+        args.append("--bibliography="+basename+".bib")
+
     args.append(filename)
 
     print(" ".join(args))
@@ -90,7 +106,7 @@ def main(argv):
     if os.path.exists(filename):
         if run_pandoc(filename, argv[1:-1]) == 0:
             if yn("Show PDF?"):
-                run(["xdg-open", basename + ".pdf"])
+                run_file(basename + ".pdf")
         elif yn("Generate .tex for debugging?"):
             run_pandoc(filename, ["-o", basename + ".tex"] + argv[1:-1])
 

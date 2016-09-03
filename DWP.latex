@@ -1,131 +1,205 @@
-\documentclass[12pt,a4paper,oneside]{article}
-
-%+ Standard packages +++++++++++++++++++++++++++++
-\usepackage[top=2.0cm, bottom=2.0cm, left=2.4cm, right=2.4cm]{geometry}
-\usepackage[usenames]{color}
-\usepackage{setspace}
-\usepackage[english,ngerman]{babel}  %%% FIXME -> polyglossia
-\usepackage[utf8]{luainputenc}
-%\usepackage{luaotfloat}
-\usepackage{fontspec}								% sets font style
-	\setmainfont{OpenSans}							% CAUTION: needs to be compiled with 
-%\usepackage[scaled]{uarial}							% LuaLaTeX. Needs Arial installed on the computer.
-%\usepackage[light,condensed,math]{anttor}			
-%\usepackage{graphicx}
+\documentclass[%
+  fontsize=12,
+  papersize=a4,%
+  halfparskip,%
+  headings=normal,
+  $if(lang)$$babel-lang$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]%
+  {scrartcl}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+$for(fontfamilies)$
+  \newfontfamily{$fontfamilies.name$}[$fontfamilies.options$]{$fontfamilies.font$}
+$endfor$
+$if(euro)$
+  \newcommand{\euro}{€}
+$endif$
+$if(monofont)$
+    \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$endif$]{$monofont$}
+$endif$
+$if(mathfont)$
+    \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+$endif$
+$if(CJKmainfont)$
+    \usepackage{xeCJK}
+    \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
+$endif$
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
 \usepackage{hyperref}
-\usepackage{longtable, booktabs}
-\usepackage{graphicx,grffile}
-\usepackage{parskip}
+$if(colorlinks)$
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+$endif$
+\hypersetup{unicode=true,
+$if(title-meta)$
+            pdftitle={$title-meta$},
+$endif$
+$if(author-meta)$
+            pdfauthor={$author-meta$},
+$endif$
+$if(keywords)$
+            pdfkeywords={$for(keywords)$$keywords$$sep$; $endfor$},
+$endif$
+$if(colorlinks)$
+            colorlinks=true,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
+            citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
+$else$
+            pdfborder={0 0 0},
+$endif$
+            breaklinks=true}
 
-%+ Document settings +++++++++++++++++++++++++++++
-
-% Modifying the title und maketitle-command -------------------------------
-\newenvironment{bold}{\bfseries}{}
-
-\usepackage{titling}
-\pretitle{\begin{center}\begin{bold}\Huge}
-\posttitle{\par\end{bold}\end{center}\vskip 0.5em}
-\preauthor{\begin{center} \large \lineskip 0.5em \begin{tabular}[t]{c}}
-\postauthor{\end{tabular}\par\end{center}}
-
-
-%- Modifying section and abstract headings ---------------------------------
+%----------- Zentrale Schriftdefinitionen
+\setsansfont{WeblySleek UI Semilight}[
+  BoldFont = {WeblySleek UI Semibold},
+  ItalicFont = {WeblySleek UI Semilight Italic},
+  BoldItalicFont = {WeblySleek UI Semibold Italic}
+]
+%\setmainfont{WeblySleek UI Semilight}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{color}
 \definecolor{dwp-darkblue}{RGB}{0,69,134}
-\definecolor{dwp-lightblue}{RGB}{52,101,164}
+\addtokomafont{disposition}{\color{dwp-darkblue}}
+\addtokomafont{subsection}{\itshape}
+\addtokomafont{subsubsection}{\bfseries}
+\addtokomafont{caption}{\itshape\footnotesize}
+\addtokomafont{captionlabel}{\itshape}
 
-\usepackage{titlesec}
-
-\titleformat{\section}
-{\color{dwp-darkblue}\normalfont\Large\bfseries}
-{\color{dwp-darkblue}\thesection}{1em}{}
-
-\titleformat{\subsection}
-{\color{dwp-lightblue}\normalfont\large\bfseries}
-{\color{dwp-lightblue}\thesubsection}{1em}{}
-
-\titleformat{\subsubsection}
-{\color{black}\normalfont\normalsize\bfseries}
-{\color{black}\thesubsubsection}{1em}{}
+%------------ Helper to check font size:
+\makeatletter
+\newcommand\thefontsize{Font size: \f@size pt}
+\makeatother
 
 
-%- Formatting the abstract environment. -----------------------------------
-%- Caution: Causes bad box warning which can be ignored --------------
+\urlstyle{same}  % don't use monospace font for urls
+$if(lang)$
+\usepackage{polyglossia}
+\setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+$for(polyglossia-otherlangs)$
+\setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
+$endfor$
+$endif$
+$if(natbib)$
+\usepackage{natbib}
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+$endif$
+$if(biblatex)$
+\usepackage$if(biblio-style)$[style=$biblio-style$]$endif${biblatex}
+$if(biblatexoptions)$\ExecuteBibliographyOptions{$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$}$endif$
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
+$endif$
+$if(listings)$
+\usepackage{listings}
+$endif$
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+$if(tables)$
+\usepackage{longtable,booktabs}
+$endif$
+$if(graphics)$
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+$endif$
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{}
+%  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+$if(dir)$
+\ifxetex
+  % load bidi as late as possible as it modifies e.g. graphicx
+  $if(latex-dir-rtl)$
+  \usepackage[RTLdocument]{bidi}
+  $else$
+  \usepackage{bidi}
+  $endif$
+\fi
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \TeXXeTstate=1
+  \newcommand{\RL}[1]{\beginR #1\endR}
+  \newcommand{\LR}[1]{\beginL #1\endL}
+  \newenvironment{RTL}{\beginR}{\endR}
+  \newenvironment{LTR}{\beginL}{\endL}
+\fi
+$endif$
+$for(header-includes)$
+$header-includes$
+$endfor$
 
-\renewenvironment{abstract}[1]{%
-	\begin{minipage}{0.9\textwidth}
-		{\color{dwp-darkblue}\Large\textbf{Abstract}\newline}{#1}}%
-	{\end{minipage}}
-
-
-
-%- Formatting block quote environment. ------------------------------------
-
-\renewenvironment{quote}[1]{%
-	\begin{center}
-		\begin{minipage}{0.85\textwidth}\small{#1}}
-		{\end{minipage}
-	\end{center}}
-
-
-%- Formatting captions -----------------------------------------------------
-\usepackage[font=bf]{caption}
-
-
-%- Title and author of the paper -------------------------------------------
-\title{$title$}
+$if(title)$
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$if(subtitle)$
+\providecommand{\subtitle}[1]{}
+\subtitle{$subtitle$}
+$endif$
+$if(author)$
 \author{$for(author)$$author$$sep$ \and $endfor$}
-\date{}											% has to be empty	
-
-%- needed, otherwise error in compiling -----------------------------------
-\def\tightlist{}
-
-\pagenumbering{arabic}	
-
-%- adjusting the space between items in different environments -------------
-%- see http://tex.stackexchange.com/questions/16793/global-setting-of-spacing-between-items-in-itemize-environment-for-beamer
-\let\tempEnuOne\enumerate
-\let\tempEnuTwo\endenumerate
-\renewenvironment{enumerate}{\tempEnuOne\addtolength{\itemsep}{-0.5\baselineskip}}{\tempEnuTwo}
-
-\let\tempItemOne\itemize
-\let\tempItemTwo\enditemize
-\renewenvironment{itemize}{\tempItemOne\addtolength{\itemsep}{-0.5\baselineskip}}{\tempItemTwo}
-
-
-% ++ BEGINNING OF THE DOCUMENT +++++++++++++++++
+$endif$
+$if(institute)$
+\institute{$for(institute)$$institute$$sep$ \and $endfor$}
+$endif$
+\date{$date$}
 
 \begin{document}
-%	\setlength{\parindent}{0em} 							% no indentation in new paragraphs % parskip or koma?
+$if(title)$
+\maketitle
+$endif$
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
 
-	\maketitle
-	$if(abstract)$
-		\begin{abstract}
-			$abstract$
-		\end{abstract}
-	$endif$
-
-	\tableofcontents
-	\thispagestyle{empty}								% no numbering on first page
-	\newpage
-
-	\setcounter{page}{1}								% start counting from one
 $for(include-before)$
 $include-before$
 
 $endfor$
 $if(toc)$
 {
+$if(colorlinks)$
 \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+$endif$
 \setcounter{tocdepth}{$toc-depth$}
 \tableofcontents
 }
 $endif$
-
-
 $if(lot)$
 \listoftables
 $endif$
-
 $if(lof)$
 \listoffigures
 $endif$
@@ -148,22 +222,8 @@ $if(biblatex)$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
 
 $endif$
-
-$if(bibliography)$
-\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
-$endif$
-
 $for(include-after)$
 $include-after$
 
 $endfor$
-
 \end{document}
-
-
-
-
-
-
-
-
