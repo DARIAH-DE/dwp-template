@@ -5,6 +5,7 @@ from readchar import readkey
 import sys
 import os
 import platform
+import re
 
 
 def yn(*prompt, default=True):
@@ -55,7 +56,6 @@ def run_file(filename):
         run(["open", filename])
 
 
-
 def run_pandoc(filename, args):
     """
     Runs pandoc with appropriate arguments.
@@ -82,6 +82,23 @@ def run_pandoc(filename, args):
     args.append("--filter=pandoc-citeproc")
     if os.path.exists(basename + ".bib"):
         args.append("--bibliography="+basename+".bib")
+
+    # find language & csl
+    if "--csl" not in argnames:
+        with open(filename, encoding="utf8") as f:
+            langtag = re.search(r'^lang:\s*(\w+)\s*$', f.read(), re.M)
+            if langtag:
+                if langtag.group(1) == 'de':
+                    csl = os.path.expanduser('~/.pandoc/templates/chicago-author-date-de.csl')
+                else:
+                    csl = os.path.expanduser('~/.pandoc/templates/chicago-author-date.csl')
+                if os.path.exists(csl):
+                    args.append("--csl="+csl)
+                else:
+                    print("Not found:", csl)
+            else:
+                print("Warning: No lang entry found")
+
 
     args.append(filename)
 
