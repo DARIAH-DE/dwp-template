@@ -137,13 +137,12 @@ $if(graphics)$
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 $endif$
 \providecommand{\todo}[1]{\textbf{\textcolor{red}{TODO:~#1}}}
-\let\orighref\href
-$if(links-as-notes)$
-
 %---------------- Linkgestaltung TODO
-% Make links footnotes instead of hotlinks:
-\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
-$endif$
+% Make links footnotes _and_ hotlinks:
+\usepackage{soul}
+\let\orighref\href
+\newcommand\visiblehref[2]{\orighref{#1}{\color{dwp-darkblue}\setulcolor{dwp-darkblue}\ul{#2}}}
+\renewcommand{\href}[2]{\visiblehref{#1}{#2}\footnote{\url{#1}}}
 $if(strikeout)$
 \usepackage[normalem]{ulem}
 % avoid problems with \sout in headers with hyperref:
@@ -210,16 +209,16 @@ $endif$
       {%
         \bfseries
         $for(author)$$author$$sep$, $endfor$: \enquote{$title$}. 
-        \emph{DARIAH-DE Working Papers} Nr.~$if(wpno)$$wpno$$else$\todo{wpno}$endif$. 
+        \emph{\visiblehref{https://de.dariah.eu/working-papers}{DARIAH-DE Working Papers}} Nr.~$if(wpno)$$wpno$$else$\todo{wpno}$endif$. 
         Göttingen: DARIAH-DE, $if(date)$$date$$else$\todo{date}$endif$.
-        URN:~$if(urn)$\orighref{$urn$}{http://nbn-resolving.org/$urn$}$else$\todo{urn}$endif$.%
+        URN:~$if(urn)$\visiblehref{http://nbn-resolving.org/$urn$}{$urn$}$else$\todo{urn}$endif$.%
       }\par
       \medskip
       \includegraphics{CC-BY_icon}\hfill
       \begin{minipage}[b]{\textwidth-7cm}
         \centering
         Dieser Beitrag erscheint unter der \\
-        Lizenz \orighref{http://creativecommons.org/licenses/by/4.0/}{Creative-Commons Attribution 4.0}~(CC-BY).
+        Lizenz \visiblehref{http://creativecommons.org/licenses/by/4.0/}{Creative-Commons Attribution 4.0}~(CC-BY).
         \par\smallskip
         Die \emph{DARIAH-DE Working Papers} werden von Mirjam Blümm,
         Thomas Kollatz, Stefan Schmunk und Christof Schöch herausgegeben.
