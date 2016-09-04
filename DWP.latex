@@ -1,9 +1,9 @@
 \documentclass[%
-  fontsize=12,
+  fontsize=12,%        Größe der Grundschrift
   papersize=a4,%
-  halfparskip,%
-  headings=normal,
-  titlepage=true,
+  halfparskip,%        halbe Zeile Absatzabstand statt einzug
+  headings=normal,%    Überschriften normalgroß
+  titlepage=true,%     eigene Seite für Titel
   $if(lang)$$babel-lang$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]%
   {scrartcl}
 % ----------------------------- Ein paar Pakete, die wir später brauchen.
@@ -50,9 +50,7 @@ $endif$
 $if(author-meta)$
             pdfauthor={$author-meta$},
 $endif$
-$if(keywords)$
-            pdfkeywords={$for(keywords)$$keywords$$sep$; $endfor$},
-$endif$
+  pdfkeywords={$for(keywords-de)$$keywords-de$$sep$; $endfor$; $for(keywords-en)$$keywords-en$$sep$; $endfor$},
 $if(colorlinks)$
             colorlinks=true,
             linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
@@ -72,7 +70,7 @@ $endif$
 ]
 %\setmainfont{WeblySleek UI Semilight}
 \renewcommand{\familydefault}{\sfdefault}
-\usepackage{color}
+\usepackage{xcolor}
 \definecolor{dwp-darkblue}{RGB}{0,69,134}
 \addtokomafont{disposition}{\color{dwp-darkblue}}
 \addtokomafont{subsection}{\itshape}
@@ -197,7 +195,7 @@ $endif$
   \centerline{\includegraphics{Logo_Working-Papers}}
   \vfill
   \footnotesize
-  \fbox{\begin{minipage}{\textwidth}
+  \fcolorbox{lightgray}{white}{\begin{minipage}{\textwidth}
       \centering
       {%
         \bfseries
@@ -218,7 +216,7 @@ $endif$
       \end{minipage}\hfill
       \includegraphics{BMBF_Logo}
   \end{minipage}}%
-  $if(report-number)$\par\medskip\fbox{\begin{minipage}{\textwidth}
+  $if(report-number)$\par\medskip\fcolorbox{lightgray}{white}{\begin{minipage}{\textwidth}
       Dieser Beitrag ist ursprünglich im $if(report-date)$$report-date$$else$\todo{report-date}$endif$ als Report~$report-number$ im Rahmen von DARIAH-DE (BMBF, Förderkennzeichen~$if(report-fkz)$$report-fkz$$else$01UG1110A-N$endif$) entstanden.
   \end{minipage}
   }$endif$}
@@ -227,17 +225,41 @@ $endif$
 $if(title)$
 \maketitle
 $endif$
+
+%---------------------------- Zweite Seite der Titelei: abstract, keywords-de, keywords-en
+
 $if(abstract)$
-\begin{abstract}
+\section*{\abstractname}
 $abstract$
-\end{abstract}
+$endif$
+
+
+$if(keywords-de)$
+\section*{Schlagwörter}
+$for(keywords-de)$$keywords-de$$sep$, $endfor$
+$else$
+$if(keywords)$
+\todo{Please provide English and German keywords in fields keywords-de and keywords-en.}
+$endif$
+$endif$
+
+
+$if(keywords-en)$
+\section*{Keywords}
+$for(keywords-en)$$keywords-en$$sep$, $endfor$
+$else$
+$if(keywords)$
+\todo{Please provide English and German keywords in fields keywords-de and keywords-en.}
+$endif$
 $endif$
 
 $for(include-before)$
 $include-before$
 
 $endfor$
-$if(toc)$
+
+%---------------------------- Dritte Seite der Titelei: Inhaltsverzeichnis
+\clearpage
 {
 $if(colorlinks)$
 \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
@@ -245,14 +267,18 @@ $endif$
 \setcounter{tocdepth}{$toc-depth$}
 \tableofcontents
 }
-$endif$
 $if(lot)$
 \listoftables
 $endif$
 $if(lof)$
 \listoffigures
 $endif$
+
+%---------------------------- Jetzt geht's los ...
+\cleardoublepage
+
 $body$
+
 
 $if(natbib)$
 $if(bibliography)$
