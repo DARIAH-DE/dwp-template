@@ -3,12 +3,16 @@
   papersize=a4,%
   halfparskip,%
   headings=normal,
+  titlepage=true,
   $if(lang)$$babel-lang$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]%
   {scrartcl}
+% ----------------------------- Ein paar Pakete, die wir später brauchen.
+% ----------------------------- Achtung: Läuft nur mit LuaLaTeX!
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
 \usepackage{fontspec}
+\usepackage{calc}
 \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
 $for(fontfamilies)$
   \newfontfamily{$fontfamilies.name$}[$fontfamilies.options$]{$fontfamilies.font$}
@@ -16,6 +20,7 @@ $endfor$
 $if(euro)$
   \newcommand{\euro}{€}
 $endif$
+% TODO in den Beispielen bislang war weder Code noch Mathe – Schriften mal ausprobieren
 $if(monofont)$
     \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$endif$]{$monofont$}
 $endif$
@@ -33,6 +38,7 @@ $endif$
 \usepackage{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
+% ---------------------- hyperref für PDF-Metadaten und Linkgestaltung
 \usepackage{hyperref}
 $if(colorlinks)$
 \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
@@ -56,6 +62,7 @@ $else$
             pdfborder={0 0 0},
 $endif$
             breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
 
 %----------- Zentrale Schriftdefinitionen
 \setsansfont{WeblySleek UI Semilight}[
@@ -73,13 +80,14 @@ $endif$
 \addtokomafont{caption}{\itshape\footnotesize}
 \addtokomafont{captionlabel}{\itshape}
 
+\usepackage{csquotes} % Anführungszeichen
+
 %------------ Helper to check font size:
 \makeatletter
 \newcommand\thefontsize{Font size: \f@size pt}
 \makeatother
 
-
-\urlstyle{same}  % don't use monospace font for urls
+%------------ Sprachdefinitionen etc. Möglichst so lassen.
 $if(lang)$
 \usepackage{polyglossia}
 \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
@@ -98,6 +106,7 @@ $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
 $endif$
+%------------- Programmausschnitte. Noch testen.
 $if(listings)$
 \usepackage{listings}
 $endif$
@@ -114,6 +123,10 @@ $endif$
 $if(tables)$
 \usepackage{longtable,booktabs}
 $endif$
+%--------------- Bilder. Als PDF oder PNG oder zur not JPEG (für Fotos etc.)
+% die maximale Breite ist die Seitenbreite.
+% PNGs und JPEGs sollten möglichst 300dpi als Auflösungsmetadaten tragen
+% mogrify -density 300 foo.png
 $if(graphics)$
 \usepackage{graphicx,grffile}
 \makeatletter
@@ -125,7 +138,11 @@ $if(graphics)$
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 $endif$
+\providecommand{\todo}[1]{\textbf{\textcolor{red}{TODO:~#1}}}
+\let\orighref\href
 $if(links-as-notes)$
+
+%---------------- Linkgestaltung TODO
 % Make links footnotes instead of hotlinks:
 \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
 $endif$
@@ -159,6 +176,9 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
+%----------------------------------
+%-------------------------- Titelei
+%----------------------------------
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
@@ -166,13 +186,42 @@ $if(subtitle)$
 \providecommand{\subtitle}[1]{}
 \subtitle{$subtitle$}
 $endif$
+$if(longauthor)$\author{$for(longauthor)$$longauthor$$sep$ \and $endfor$}
+$else$
 $if(author)$
 \author{$for(author)$$author$$sep$ \and $endfor$}
 $endif$
-$if(institute)$
-\institute{$for(institute)$$institute$$sep$ \and $endfor$}
 $endif$
-\date{$date$}
+\date{$if(institute)$$for(institute)$$institute$$sep$\\ $endfor$ $endif$}
+\publishers{
+  \centerline{\includegraphics{Logo_Working-Papers}}
+  \vfill
+  \footnotesize
+  \fbox{\begin{minipage}{\textwidth}
+      \centering
+      {%
+        \bfseries
+        $for(author)$$author$$sep$, $endfor$: \enquote{$title$}. 
+        \emph{DARIAH-DE Working Papers} Nr.~$if(wpno)$$wpno$$else$\todo{wpno}$endif$. 
+        Göttingen: DARIAH-DE, $if(date)$$date$$else$\todo{date}$endif$.
+        URN:~$if(urn)$\orighref{$urn$}{http://nbn-resolving.org/$urn$}$else$\todo{urn}$endif$.%
+      }\par
+      \medskip
+      \includegraphics{CC-BY_icon}\hfill
+      \begin{minipage}[b]{\textwidth-7cm}
+        \centering
+        Dieser Beitrag erscheint unter der \\
+        Lizenz \orighref{http://creativecommons.org/licenses/by/4.0/}{Creative-Commons Attribution 4.0}~(CC-BY).
+        \par\smallskip
+        Die \emph{DARIAH-DE Working Papers} werden von Mirjam Blümm,
+        Thomas Kollatz, Stefan Schmunk und Christof Schöch herausgegeben.
+      \end{minipage}\hfill
+      \includegraphics{BMBF_Logo}
+  \end{minipage}}%
+  $if(report-number)$\par\medskip\fbox{\begin{minipage}{\textwidth}
+      Dieser Beitrag ist ursprünglich im $if(report-date)$$report-date$$else$\todo{report-date}$endif$ als Report~$report-number$ im Rahmen von DARIAH-DE (BMBF, Förderkennzeichen~$if(report-fkz)$$report-fkz$$else$01UG1110A-N$endif$) entstanden.
+  \end{minipage}
+  }$endif$}
 
 \begin{document}
 $if(title)$
