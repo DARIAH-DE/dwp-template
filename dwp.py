@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
 from subprocess import run
-from readchar import readkey
+try:
+    from readchar import readkey
+except ImportError:
+    readkey = input
 import sys
 import os
 import platform
