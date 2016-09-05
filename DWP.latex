@@ -283,6 +283,14 @@ $if(lof)$
 \listoffigures
 $endif$
 
+%---------------------------- Bibliographie vorbereiten
+% Am Ende jeder Datei mit Literaturverzeichnis sollte das hier stehen:
+\newcommand{\biblio}{%
+  \clearpage
+  \addsec{\bibname}
+  \let\href\visiblehref%
+}
+
 %---------------------------- Jetzt geht's los ...
 \cleardoublepage
 

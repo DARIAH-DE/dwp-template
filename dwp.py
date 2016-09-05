@@ -99,7 +99,7 @@ def run_pandoc(filename, args):
             else:
                 print("Warning: No lang entry found")
 
-
+    args.append('--metadata=link-citations:true')
     args.append(filename)
 
     print(" ".join(args))
