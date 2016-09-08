@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from subprocess import run
+from subprocess import call
 try:
     from readchar import readkey
 except ImportError:
@@ -52,11 +52,11 @@ def yn(*prompt, default=True):
 
 def run_file(filename):
     if platform.system() == 'Linux':
-        run(["xdg-open", filename])
+        call(["xdg-open", filename])
     elif platform.system() == 'Windows':
         os.startfile(filename)
     else:
-        run(["open", filename])
+        call(["open", filename])
 
 
 def run_pandoc(filename, args):
@@ -106,8 +106,8 @@ def run_pandoc(filename, args):
     args.append(filename)
 
     print(" ".join(args))
-    result = run(args)
-    return result.returncode
+    result = call(args)
+    return result
 
 
 def main(argv):
