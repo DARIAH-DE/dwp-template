@@ -109,6 +109,21 @@ Wird ein solches automatisches Literaturverzeichnis verwendet, so muss der Artik
 
 Das Kommando setzt automatisch die entsprechende Überschrift und passt die Formatierungsvorgaben an.
 
+## Bilder
+
+Bilder sollten als PDF, PNG oder JPEG-Datei mitgeliefert und in einer Bildreferenz im separaten Absatz referenziert werden:
+
+```markdown
+![_Anas flexilis_, Jungtier.](Chick1.png)
+```
+
+Ohne weitere Angaben wird eine in den Bildmetadaten hinterlegte Druckgrößenangabe berücksichtigt, die Bildgröße jedoch auf die Größe des Textbereichs begrenzt. Da die entsprechenden Metadaten oft falsch sind, sollten sie bei Bildern in Seitengröße überprüft und ggf. korrigiert werden. Das geht z. B. mit [ImageMagick](http://www.imagemagick.org/script/command-line-options.php#density), das folgende Kommando setzt z.B. die Auflösung aller JPEG-Bilder auf 300 dpi:
+
+```sh
+mogrify -density 300 -units PixelsPerInch *.jpg
+```
+
+Bei Gimp heißt die entsprechend Option _Print Size_. Alternativ sind Größenangaben beim Einbinden des Bilds möglich.
 
 # Redaktionsumgebung
 
