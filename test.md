@@ -62,7 +62,7 @@ had lived nearly twenty-one years in the world with very little to distress or v
 2. And had, in consequence of her sister's marriage, been mistress of his house from a very early period.
 3. Her mother had died too long ago for her to have more than an indistinct remembrance of her caresses, and her place had been supplied by an excellent woman as governess, who had fallen little short of a mother in affection.
 
-![BILDUNTERSCHRIFT ](Chick1.png)
+![BILDUNTERSCHRIFT ](img/Logo_Working-Papers.png)
 
 Sixteen years had Miss Taylor been in Mr. Woodhouse's family, less as a governess than a friend, very fond of both daughters, but particularly of Emma. Between them it was more the intimacy of sisters.
 

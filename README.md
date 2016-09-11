@@ -7,7 +7,7 @@ author:
 lang: de
 date: 2016
 abstract: |
-    Für die Publikation der DARIAH-Working-Papers empfehlen wir einen Workflow
+    Für die Publikation der DARIAH-Working-Papers gibt es einen Workflow
     auf der Basis von Markdown, das mit Pandoc und LuaLatex formatiert wird.
 
     Dieser Artikel beschreibt die Installation und einige Spezifika der
@@ -87,7 +87,7 @@ urn
 
 Für Texte, die zuvor als Report veröffentlicht worden sind, sollen die folgenden Metadaten ergänzt werden:
 
-report-no
+report-number
 ~    Nummer des Reports, z. B. `1.2.3`
 
 report-date
@@ -114,8 +114,9 @@ Das Kommando setzt automatisch die entsprechende Überschrift und passt die Form
 Bilder sollten als PDF, PNG oder JPEG-Datei mitgeliefert und in einer Bildreferenz im separaten Absatz referenziert werden:
 
 ```markdown
-![_Anas flexilis_, Jungtier.](Chick1.png)
+![Ein Beispielbild](img/Logo_Working-Papers.png)
 ```
+![Ein Beispielbild](img/Logo_Working-Papers.png)
 
 Ohne weitere Angaben wird eine in den Bildmetadaten hinterlegte Druckgrößenangabe berücksichtigt, die Bildgröße jedoch auf die Größe des Textbereichs begrenzt. Da die entsprechenden Metadaten oft falsch sind, sollten sie bei Bildern in Seitengröße überprüft und ggf. korrigiert werden. Das geht z. B. mit [ImageMagick](http://www.imagemagick.org/script/command-line-options.php#density), das folgende Kommando setzt z.B. die Auflösung aller JPEG-Bilder auf 300 dpi:
 
@@ -160,11 +161,11 @@ cd /usr/local/bin
 sudo ln -s ~/projects/dwp-template .
 ```
 
-Nach erfolgreicher Installation sollte es in jedem Verzeichnis möglich sein, mit `dwp.py datei.md` die entsprechende Datei in PDF zu übersetzen.
+Nach erfolgreicher Installation sollte es in jedem Verzeichnis möglich sein, mit `dwp datei.md` die entsprechende Datei in PDF zu übersetzen.
 
 ## Benutzung
 
-Das beigefügte Skript `dwp.py` kann einfach mit `dwp.py artikeldatei.md` aufgerufen werden. Es ruft Pandoc mit den richtigen Parametern auf, um `artikeldatei.pdf` zu erzeugen. Das kann dann z. B. so aussehen:
+Das beigefügte Skript `dwp.py` kann einfach mit `dwp artikeldatei.md` aufgerufen werden. Es ruft Pandoc mit den richtigen Parametern auf, um `artikeldatei.pdf` zu erzeugen. Das kann dann z. B. so aussehen:
 
 ```bash
 pandoc -o article.pdf --latex-engine=lualatex --template=DWP \

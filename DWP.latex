@@ -77,6 +77,7 @@ $endif$
 \addtokomafont{subsubsection}{\bfseries}
 \addtokomafont{caption}{\itshape\footnotesize}
 \addtokomafont{captionlabel}{\itshape}
+\addtokomafont{date}{\footnotesize}
 
 \usepackage{csquotes} % Anführungszeichen
 
@@ -227,8 +228,12 @@ $endif$
   \end{minipage}}%
   $if(report-number)$\par\medskip\fcolorbox{lightgray}{white}{\begin{minipage}{\textwidth}
       Dieser Beitrag ist ursprünglich im $if(report-date)$$report-date$$else$\todo{report-date}$endif$ als Report~$report-number$ im Rahmen von DARIAH-DE (BMBF, Förderkennzeichen~$if(report-fkz)$$report-fkz$$else$01UG1110A-N$endif$) entstanden.
-  \end{minipage}
-  }$endif$}
+  \end{minipage}%
+  }$endif$
+  $if(publish-note)$\par\medskip\fcolorbox{lightgray}{white}{\begin{minipage}{\textwidth}
+      $publish-note$
+  \end{minipage}}%
+  $endif$}
 
 \begin{document}
 $if(title)$
