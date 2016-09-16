@@ -30,14 +30,38 @@ date: 1816
 wpno: 4711
 ...
 
-# Prelude
+# Micro Typography
 
-Schon Pythargoras wußte, dass in einem rechtwinkligen Dreiek mit den Ankatheten $a$ und $b$ und der Hypothenuse $c$ gilt:
+There are various ways to include smart typography: If you take quotes, for example, you can use "straight" quotes, ``LaTeX-style'' quotes or “proper unicode quotes”, let's see what happens when someone uses «inverse French», »French« or „German“ quotes in an otherwise English text.
+
+Dashes are also important. Here's a hyphen-esque situation — immediately followed by a unicode em-dash that has been properly surrounded with unicode thin spaces. Now ASCII hyphens---three of them. You might also try an en-dash: Here – the Unicode variant, surrounded by spaces, and now -- the two-hyphen variant, also surrounded by spaces.
+
+Finally--two hyphens, no spaces.
+
+
+# Languages and scientific components of text
+
+If your text contains parts in a foreign language, use HTML-like tags like `<div lang="de">` to start and `</div>` to end. This will adapt hyphenation patterns and switch the quoting style:
+
+<div lang="de">
+
+Schon Pythargoras wußte, dass in einem rechtwinkligen Dreiek mit den "Ankatheten" $a$ und $b$ und der Hypothenuse $c$ gilt:
 
 $$a^2 + b^2 = c^2 \iff c = \sqrt{a^2 + b^2}$$
 
 Man müsste jetzt noch [Aussagen](http://de.wikipedia.org/Aussage) über die Winkel $\alpha, \beta, \gamma$ etc. machen.
 
+</div>
+
+Code snippets can be included in the text, but also as separate blocks. Denote the programming language to get syntax highlighting:
+
+```haskell
+quicksort [] = []
+quicksort (p:xs) = (quicksort lesser) ++ [p] ++ (quicksort greater)
+    where
+        lesser = filter (< p) xs
+        greater = filter (>= p) xs
+```
 
 # Introduction 
 
