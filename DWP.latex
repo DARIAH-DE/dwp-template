@@ -79,7 +79,7 @@ $endif$
 \addtokomafont{captionlabel}{\itshape}
 \addtokomafont{date}{\footnotesize}
 
-\usepackage{csquotes} % Anführungszeichen
+\usepackage[autostyle=try]{csquotes} % Anführungszeichen
 
 %------------ Helper to check font size:
 \makeatletter
