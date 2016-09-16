@@ -4,6 +4,12 @@ source=`pwd`
 templates=~/.pandoc/templates
 latex=`kpsexpand '$TEXMFHOME/tex/latex/dwp'`
 bin=/usr/local/bin
+if [ "$1" = "-y" ]
+then
+  iarg=""
+else
+  iarg="-i"
+fi
 
 cat <<EOF
 DWP-Installation
@@ -23,14 +29,14 @@ EOF
 read dolink
 if [ "$dolink" = "j" ]
 then
-  install='ln -s -v -i'
+  install='ln -s -v -f'
 else
-  install='cp -r -p -v -i'
+  install='cp -r -p -v'
 fi
 
 
 mkdir -p "$templates"
-$install "$source/DWP.latex" "$source"/*.csl "$templates/"
+$install $iarg "$source/DWP.latex" "$source"/*.csl "$templates/"
 mkdir -p "$latex"
-$install "$source"/img/* "$latex/"
-sudo $install "$source/dwp.py" "$bin/dwp"
+$install $iarg "$source"/img/* "$latex/"
+sudo $install $iarg "$source/dwp.py" "$bin/dwp"
