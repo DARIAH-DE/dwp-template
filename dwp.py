@@ -129,6 +129,9 @@ def main(argv):
                 run_file(basename + ".pdf")
         elif yn("Generate .tex for debugging?"):
             run_pandoc(filename, ["-o", basename + ".tex"] + argv[1:-1])
+    else:
+        print("ERROR:", filename, "not found.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
