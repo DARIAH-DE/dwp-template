@@ -28,74 +28,47 @@ Titeldaten und einige Einstellungen gehören in einen Metadatenblock im YAML-For
 
 Einige Felder (z. B. die Autorenliste) kann mehrere Werte aufnehmen. Dazu schreibt man eine YAML-Liste: Die Zeile mit dem Feldnamen endet nach dem Doppelpunkt, darauf folgt ein Listeneintrag pro Zeile, beginnend mit einem Bindestrich. Das Feld `abstract` kann mehrere Absätze umfassen, dazu endet die Zeile mit dem Schlüsselwort mit einem `|` und es folgen die Textabsätze eingerückt. Der Metadatenblock kann also z. B. so aussehen:
 
-```yaml
----
-title: DARIAH Working Paper Workflow
-subtitle: Spaß mit Pandoc
-author: 
-- Thorsten Vitt
-- Mirjam Blümm
-lang: de
-date: 2016
-abstract: |
-    Für die Publikation der DARIAH-Working-Papers empfehlen wir einen Workflow
-    auf der Basis von Markdown, das mit Pandoc und LuaLatex formatiert wird.
+    ---
+    title: DARIAH Working Paper Workflow
+    subtitle: Spaß mit Pandoc
+    author: 
+    - Thorsten Vitt
+    - Mirjam Blümm
+    lang: de
+    date: 2016
+    abstract: |
+        Für die Publikation der DARIAH-Working-Papers empfehlen wir einen Workflow
+        auf der Basis von Markdown, das mit Pandoc und LuaLatex formatiert wird.
 
-    Dieser Artikel beschreibt die Installation und einige Spezifika der
-    Working-Paper-Vorlage; Details zur Markdown-Syntax findet man z. B. auf der
-    Pandoc-Homepage.
-...
-```
+        Dieser Artikel beschreibt die Installation und einige Spezifika der
+        Working-Paper-Vorlage; Details zur Markdown-Syntax findet man z. B. auf der
+        Pandoc-Homepage.
+    ...
 
 Die folgenden Metadatenfelder stehen zur Verfügung:
 
-title
-~    Titel des Artikels.
-
-subtitle (optional)
-~    Untertitel.
-
-lang
-~    Sprache, in der der Artikel verfasst ist: `de` oder `en`.
-
-author
-~    Autor des Artikels. Bei mehreren Autoren Liste verwenden.
-
-longauthor (optional)
-~    Wenn angegeben, wird diese Angabe statt _author_ unter dem Titel gesetzt und _author_ für Zitationsblock und PDF-Metadaten verwendet. Das ist dann sinnvoll, wenn Autoren aus mehreren Institutionen beteiligt sind: In diesem Falle im longauthor-Feld hinter die Autornamen hochgestellte Ziffern schreiben, die bei den Institutionsnamen wiederholt werden. (Liste möglich)
-
-institute
-~    Institut(e) (Liste möglich)
-
-date
-~    Veröffentlichungsjahr
-
-abstract
-~    Zusammenfassung
-
-keywords-de
-~    Schlagwörter auf Deutsch (als Liste)
-
-keywords-en
-~    Schlagwörter auf Englisch (als Liste)
-
-wpno
-~    DARIAH-Working-Papers Nr. (wird von der Redaktion eingesetzt)
-
-urn
-~    URN (wird von der Redaktion eingesetzt)
+| Feld                  | Bedeutung                                                     |
+|-----------------------|---------------------------------------------------------------|
+| title                 | Titel des Artikels.                                           |
+| subtitle (optional)   | Untertitel.                                                   |
+| lang                  | Sprache, in der der Artikel verfasst ist: `de` oder `en`.     |
+| author                | Autor des Artikels. Bei mehreren Autoren Liste verwenden.     |
+| longauthor (optional) | Autoren mit Fußnotenzeichen für Institute                     |
+| institute             | Institut(e), ggf. mit Fußnotenzeichen (Liste möglich)         |
+| date                  | Veröffentlichungsjahr                                         |
+| abstract              | Zusammenfassung                                               |
+| keywords-de           | Schlagwörter auf Deutsch (als Liste)                          |
+| keywords-en           | Schlagwörter auf Englisch (als Liste)                         |
+| wpno                  | DARIAH-Working-Papers Nr. (wird von der Redaktion eingesetzt) |
+| urn                   | URN (wird von der Redaktion eingesetzt)                       |
 
 Für Texte, die zuvor als Report veröffentlicht worden sind, sollen die folgenden Metadaten ergänzt werden:
 
-report-number
-~    Nummer des Reports, z. B. `1.2.3`
-
-report-date
-~    Veröffentlichungszeitraum, z. B. `Dezember 2015`
-
-report-fkz (optional)
-~    Förderkennzeichen
-
+| Feld                  | Bedeutung                                        |
+|-----------------------|--------------------------------------------------|
+| report-number         | Nummer des Reports, z. B. `1.2.3`                |
+| report-date           | Veröffentlichungszeitraum, z. B. `Dezember 2015` |
+| report-fkz (optional) | Förderkennzeichen                                |
 
 ## Bibliographie
 
