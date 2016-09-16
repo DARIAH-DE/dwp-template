@@ -201,8 +201,16 @@ $if(author)$
 $endif$
 $endif$
 \date{$if(institute)$$for(institute)$$institute$$sep$\\ $endfor$ $endif$}
-\publishers{
-  \centerline{\includegraphics{Logo_Working-Papers}}
+\publishers{%
+  \centerline{\includegraphics{Logo_Working-Papers.pdf}}%
+}
+\makeatletter
+\newcommand{\kaestel}[1]{\gdef\@thanks{%
+    #1%
+}}%
+\makeatother
+\kaestel{%
+  \enlargethispage{2cm}
   \vfill
   \footnotesize
   \fcolorbox{lightgray}{white}{\begin{minipage}{\textwidth}
