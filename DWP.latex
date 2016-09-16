@@ -78,6 +78,7 @@ $endif$
 \addtokomafont{caption}{\itshape\footnotesize}
 \addtokomafont{captionlabel}{\itshape}
 \addtokomafont{date}{\footnotesize}
+\addtokomafont{subtitle}{\Large}
 
 \usepackage[autostyle=try]{csquotes} % Anführungszeichen
 
@@ -179,7 +180,7 @@ $endfor$
 \usepackage[footsepline=true]{scrlayer-scrpage}
 \setkomafont{pageheadfoot}{\normalfont\footnotesize}
 \setkomafont{footsepline}{\color{dwp-darkblue}}
-\lofoot{\emph{DARIAH-DE Working Papers}$if(wpno)$ Nr.~$wpno$$endif$}
+\lofoot{DARIAH-DE Working Papers$if(wpno)$ Nr.~$wpno$$endif$}
 \cofoot{}
 \rofoot{\thepage}
 \pagestyle{scrheadings}
