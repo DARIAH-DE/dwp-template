@@ -63,6 +63,21 @@ quicksort (p:xs) = (quicksort lesser) ++ [p] ++ (quicksort greater)
         greater = filter (>= p) xs
 ```
 
+# Citations
+
+It is easily possible to include references [@hh2010]. To do so we recommend the following:
+
+1. Write or export your bibliography as a BibLaTeX database named alike your article – i. e. for `test.md`, it should be called `test.bib`.
+2. End your markdown document with a line that reads `\bibliography`.
+
+References to your bibliography can be written in a number of ways:
+
+* Easiest way is to write `[@hh2010]` [@hh2010]. 
+* You can also include prefixes and page references as in `[see @hh2010, p. 1]` [see @hh2010, p. 1].
+* Text references look like @hh2010a, without the brackets: `@hh2010a`
+* Multiple references share brackets [see, e. g., @hh2010; @hh2010a; @hh2010b]
+* "As Hagen [-@hh2010] says" is a common beginning for which the author of a citation can be suppressed
+
 # Introduction 
 
  Emma (Austen 1815) QUELLENANGABE ^[Quellenagaben im Text in Klammern einfügen (Autor, Jahr, ggf. Seitenangabe)], by Jane Austen is a novel about youthful hubris and the perils of misconstrued romance. As in her other novels, Austen explores the concerns and difficulties of genteel women living in Georgian-Regency England; she also creates a lively comedy of manners among her characters.^[<https://en.wikipedia.org/wiki/Emma_(novel)> SELFLINKED LINKS, Links möglichst in die Fußnoten setzen ] FOOTNOTE
