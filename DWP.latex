@@ -210,6 +210,22 @@ $endif$
 \newcommand{\kaestel}[1]{\gdef\@thanks{%
     #1%
 }}%
+\newcommand{\numbername}{No.}
+\newcommand{\licenseblurb}{%
+        This article is published under the \\
+        licence \visiblehref{http://creativecommons.org/licenses/by/4.0/}{Creative-Commons Attribution 4.0}~(CC-BY).
+        \par\smallskip
+        The \emph{DARIAH-DE Working Papers} are published by Mirjam Blümm,
+        Thomas Kollatz, Stefan Schmunk and Christof Schöch.}
+\gappto\captionsgerman{%
+  \renewcommand{\numbername}{Nr.}
+  \renewcommand{\licenseblurb}{%
+        \centering
+        Dieser Beitrag erscheint unter der \\
+        Lizenz \visiblehref{http://creativecommons.org/licenses/by/4.0/}{Creative-Commons Attribution 4.0}~(CC-BY).
+        \par\smallskip
+        Die \emph{DARIAH-DE Working Papers} werden von Mirjam Blümm,
+    Thomas Kollatz, Stefan Schmunk und Christof Schöch herausgegeben.}}
 \makeatother
 \kaestel{%
   \enlargethispage{2cm}
@@ -220,7 +236,7 @@ $endif$
       {%
         \bfseries
         $for(author)$$author$$sep$, $endfor$: \enquote{$title$}. 
-        \emph{\visiblehref{https://de.dariah.eu/working-papers}{DARIAH-DE Working Papers}} Nr.~$if(wpno)$$wpno$$else$\todo{wpno}$endif$. 
+        \emph{\visiblehref{https://de.dariah.eu/working-papers}{DARIAH-DE Working Papers}} \numbername~$if(wpno)$$wpno$$else$\todo{wpno}$endif$. 
         Göttingen: DARIAH-DE, $if(date)$$date$$else$\todo{date}$endif$.
         URN:~$if(urn)$\visiblehref{http://nbn-resolving.org/$urn$}{$urn$}$else$\todo{urn}$endif$.%
       }\par
@@ -228,11 +244,7 @@ $endif$
       \includegraphics{CC-BY_icon}\hfill
       \begin{minipage}[b]{\textwidth-7cm}
         \centering
-        Dieser Beitrag erscheint unter der \\
-        Lizenz \visiblehref{http://creativecommons.org/licenses/by/4.0/}{Creative-Commons Attribution 4.0}~(CC-BY).
-        \par\smallskip
-        Die \emph{DARIAH-DE Working Papers} werden von Mirjam Blümm,
-        Thomas Kollatz, Stefan Schmunk und Christof Schöch herausgegeben.
+        \licenseblurb
       \end{minipage}\hfill
       \includegraphics{BMBF_Logo}
   \end{minipage}}%
