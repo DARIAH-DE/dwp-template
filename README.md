@@ -87,9 +87,9 @@ Das Kommando setzt automatisch die entsprechende Überschrift und passt die Form
 Bilder sollten als PDF, PNG oder JPEG-Datei mitgeliefert und in einer Bildreferenz im separaten Absatz referenziert werden:
 
 ```markdown
-![Ein Beispielbild](img/Logo_Working-Papers.png)
+![Ein Beispielbild](img/Logo_Working-Papers.pdf)
 ```
-![Ein Beispielbild](img/Logo_Working-Papers.png)
+![Ein Beispielbild](img/Logo_Working-Papers.pdf)
 
 Ohne weitere Angaben wird eine in den Bildmetadaten hinterlegte Druckgrößenangabe berücksichtigt, die Bildgröße jedoch auf die Größe des Textbereichs begrenzt. Da die entsprechenden Metadaten oft falsch sind, sollten sie bei Bildern in Seitengröße überprüft und ggf. korrigiert werden. Das geht z. B. mit [ImageMagick](http://www.imagemagick.org/script/command-line-options.php#density), das folgende Kommando setzt z.B. die Auflösung aller JPEG-Bilder auf 300 dpi:
 
