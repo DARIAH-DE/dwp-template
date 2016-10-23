@@ -13,6 +13,10 @@
       <name>Peter Baumgartner</name>
       <email>peter.baumgartner@donau-uni.ac.at</email>
     </contributor>
+    <contributor>
+      <name>Thorsten Vitt</name>
+      <email>thorsten.vitt@uni-wuerzburg.de</email>
+    </contributor>
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>The author-date variant of the Chicago style adapted for German. I addition to the online reference I've used:
@@ -32,7 +36,7 @@
 	* not all archive items should end with a fullstop. A doi is followed by a comma and space, a URL just by a space before the date comes. --
 	NOTE: this should be checked more in detail --
 	* if there is just a secondary contributor (e.g. editor of a book) then this is the primary contributor and the generated output should not repeat the name as secondary contributor.</summary>
-    <updated>2016-02-25T21:07:49+00:00</updated>
+    <updated>2016-10-22T16:20:15</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="de">
@@ -373,7 +377,7 @@
       </group>
     </layout>
   </citation>
-  <bibliography hanging-indent="true" et-al-min="11" et-al-use-first="7" subsequent-author-substitute="---" entry-spacing="0">
+  <bibliography hanging-indent="true" et-al-min="11" et-al-use-first="7" entry-spacing="0">
     <sort>
       <key macro="contributors"/>
       <key variable="issued"/>
