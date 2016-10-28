@@ -39,11 +39,11 @@ $endif$
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 % ---------------------- hyperref für PDF-Metadaten und Linkgestaltung
-\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}
 $if(colorlinks)$
 \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
 $endif$
-\PassOptionsToPackage{hyphens}{url}
+\usepackage{hyperref}
 \hypersetup{unicode=true,
 $if(title-meta)$
             pdftitle={$title-meta$},
