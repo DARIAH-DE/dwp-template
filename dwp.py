@@ -36,7 +36,8 @@ def yn(*prompt, default=True):
 
     print(*prompt, end=options, flush=True)
     while True:
-        key = readkey()[0]
+        inp = readkey()
+        key = inp[0] if inp else default_keys[0]
 
         if key in accept or default and key in default_keys:
             print(accept[0])
