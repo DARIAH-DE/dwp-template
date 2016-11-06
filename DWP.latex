@@ -43,6 +43,8 @@ $endif$
 $if(colorlinks)$
 \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
 $endif$
+\usepackage{xcolor}
+\definecolor{dwp-darkblue}{RGB}{0,69,134}
 \usepackage{hyperref}
 \hypersetup{unicode=true,
 $if(title-meta)$
@@ -52,15 +54,19 @@ $if(author-meta)$
             pdfauthor={$author-meta$},
 $endif$
   pdfkeywords={$for(keywords-de)$$keywords-de$$sep$; $endfor$; $for(keywords-en)$$keywords-en$$sep$; $endfor$},
+  colorlinks=true,
+  urlcolor=dwp-darkblue,
 $if(colorlinks)$
-            colorlinks=true,
             linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
             citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
-            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
 $else$
-            pdfborder={0 0 0},
+            linkcolor=black,
+            citecolor=black,
 $endif$
             breaklinks=true}
+\makeatletter
+\def\url@bluestyle{\color{dwp-darkblue}}
+\makeatother
 \urlstyle{same}  % don't use monospace font for urls
 
 %----------- Zentrale Schriftdefinitionen
@@ -71,8 +77,6 @@ $endif$
 ]
 %\setmainfont{WeblySleek UI Semilight}
 \renewcommand{\familydefault}{\sfdefault}
-\usepackage{xcolor}
-\definecolor{dwp-darkblue}{RGB}{0,69,134}
 \addtokomafont{disposition}{\color{dwp-darkblue}}
 \addtokomafont{subsection}{\itshape}
 \addtokomafont{subsubsection}{\bfseries}
@@ -144,8 +148,9 @@ $endif$
 % Make links footnotes _and_ hotlinks:
 \usepackage{soul}
 \let\orighref\href
+\let\origfootnote\footnote
 \newcommand\visiblehref[2]{\orighref{#1}{\color{dwp-darkblue}\setulcolor{dwp-darkblue}\ul{#2}}}
-\renewcommand{\href}[2]{\visiblehref{#1}{#2}\footnote{\url{#1}}}
+\renewcommand{\href}[2]{\visiblehref{#1}{#2}\origfootnote{\url{#1}}}
 $if(strikeout)$
 \usepackage[normalem]{ulem}
 % avoid problems with \sout in headers with hyperref:
