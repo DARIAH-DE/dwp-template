@@ -258,7 +258,7 @@ $endif$
   \end{minipage}%
   }$endif$
   $if(publish-note)$\par\medskip\fcolorbox{lightgray}{white}{\begin{minipage}{\textwidth}
-      $publish-note$
+      $publish-note$. $if(urn-alt)$URN:~\visiblehref{http://nbn-resolving.org/$urn-alt$}{$urn-alt$}.$endif$
   \end{minipage}}%
   $endif$}
 

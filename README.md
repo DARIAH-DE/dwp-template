@@ -62,13 +62,20 @@ Die folgenden Metadatenfelder stehen zur Verfügung:
 | wpno                  | DARIAH-Working-Papers Nr. (wird von der Redaktion eingesetzt) |
 | urn                   | URN (wird von der Redaktion eingesetzt)                       |
 
-Für Texte, die zuvor als Report veröffentlicht worden sind, sollen die folgenden Metadaten ergänzt werden:
+Für Texte, die zuvor als DARIAH-Report veröffentlicht worden sind, sollen die folgenden Metadaten ergänzt werden:
 
 | Feld                  | Bedeutung                                        |
 |-----------------------|--------------------------------------------------|
 | report-number         | Nummer des Reports, z. B. `1.2.3`                |
 | report-date           | Veröffentlichungszeitraum, z. B. `Dezember 2015` |
 | report-fkz (optional) | Förderkennzeichen                                |
+
+Für weitere Anmerkungen, die in einem eigenen Matadatenfeld ergänzt werden sollen, stehen folgende Felder zur Verfügung:
+
+| Feld                  | Bedeutung                                        |
+|-----------------------|--------------------------------------------------|
+| publish-note          | Zusätzliche Angaben (Freitext) vor allem für die Quellenangabe von Erstpublikationen |
+| urn-alt (optional)    | URN der Erstveröffentlichung |
 
 ## Bibliographie
 
