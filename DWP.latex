@@ -127,6 +127,7 @@ $if(verbatim-in-note)$
 $endif$
 $if(tables)$
 \usepackage{longtable,booktabs}
+\renewcommand{\arraystretch}{1.5}
 $endif$
 %--------------- Bilder. Als PDF oder PNG oder zur not JPEG (für Fotos etc.)
 % die maximale Breite ist die Seitenbreite.
