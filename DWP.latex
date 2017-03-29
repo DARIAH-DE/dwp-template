@@ -94,6 +94,7 @@ $endif$
 
 %------------ Sprachdefinitionen etc. Möglichst so lassen.
 $if(lang)$
+\usepackage[base]{babel} %% FIXME workaround for https://github.com/reutenauer/polyglossia/issues/129
 \usepackage{polyglossia}
 \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
 $for(polyglossia-otherlangs)$
