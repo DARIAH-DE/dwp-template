@@ -306,6 +306,7 @@ $endif$
   $endif$}
 
 \begin{document}
+$if(draft)$$else$
 $if(title)$
 \maketitle
 $endif$
@@ -358,6 +359,7 @@ $if(lof)$
 \listoffigures
 $endif$
 
+$endif$
 %---------------------------- Bibliographie vorbereiten
 % Am Ende jeder Datei mit Literaturverzeichnis sollte das hier stehen:
 \newcommand{\biblio}{%
