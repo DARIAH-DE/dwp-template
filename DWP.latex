@@ -172,6 +172,13 @@ $if(tables)$
 \usepackage{longtable,booktabs}
 \renewcommand{\arraystretch}{1.5}
 $endif$
+%--------------- Floats wie Bilder und Tabellen
+\usepackage{float}
+\floatplacement{figure}{htbp}
+\floatplacement{table}{htbp}
+\newcommand{\floatappendix}{%
+  \renewcommand{\bottomfraction}{0.85}
+  \renewcommand{\textfraction}{0.05}}
 %--------------- Bilder. Als PDF oder PNG oder zur not JPEG (für Fotos etc.)
 % die maximale Breite ist die Seitenbreite.
 % PNGs und JPEGs sollten möglichst 300dpi als Auflösungsmetadaten tragen
