@@ -176,7 +176,6 @@ $endif$
 % die maximale Breite ist die Seitenbreite.
 % PNGs und JPEGs sollten möglichst 300dpi als Auflösungsmetadaten tragen
 % mogrify -density 300 foo.png
-$if(graphics)$
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -186,7 +185,6 @@ $if(graphics)$
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-$endif$
 \providecommand{\todo}[1]{\textbf{\textcolor{red}{TODO:~#1}}}
 %---------------- Linkgestaltung TODO
 % Make links footnotes _and_ hotlinks:
