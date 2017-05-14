@@ -13,7 +13,7 @@
 \usepackage{fixltx2e} % provides \textsubscript
 \usepackage{fontspec}
 \usepackage{calc}
-\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\defaultfontfeatures{Scale=MatchLowercase}
 $for(fontfamilies)$
   \newfontfamily{$fontfamilies.name$}[$fontfamilies.options$]{$fontfamilies.font$}
 $endfor$
@@ -24,7 +24,7 @@ $endif$
 $if(monofont)$
     \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$endif$]{$monofont$}
 $else$
-    \setmonofont{Iosevka}
+    \setmonofont{Iosevka}[StylisticSet=8]
 $endif$
 $if(mathfont)$
     \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
@@ -73,6 +73,7 @@ $endif$
 
 %----------- Zentrale Schriftdefinitionen
 \setsansfont{WeblySleek UI Semilight}[
+  Ligatures=TeX,
   BoldFont = {WeblySleek UI Semibold},
   ItalicFont = {WeblySleek UI Semilight Italic},
   BoldItalicFont = {WeblySleek UI Semibold Italic}
