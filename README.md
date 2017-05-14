@@ -5,7 +5,7 @@ Dieses Repository enthält die Vorlagen und Redaktionsumgebung für die __[DARIA
 
 * __[Autorinnen und Autoren](DWP-Autorenhinweise.pdf)__ finden Hinweise zur technischen Gestaltung ihrer Artikel in den [AutorInnenhinweisen](DWP-Autorenhinweise.pdf).
 
-* Redakteurinnen, Redakteure und andere Interessierte finden [hier __Hinweise zu Installation und Gebrauch des Redaktionssystems__](DWP-Redaktionssystem.pdf).
+* Redakteurinnen, Redakteure und andere Interessierte finden [hier __Hinweise zu Installation und Gebrauch der Redaktionsumgebung und Vorlage_](DWP-Redaktionsumgebung.pdf).
 
 
 Bitte nehmen Sie vorab mit dem Redaktionsteam Kontakt auf, wenn Sie einen Beitrag in den DARIAH-DE Working Papers planen: dwp-redaktion@gwdg.de
