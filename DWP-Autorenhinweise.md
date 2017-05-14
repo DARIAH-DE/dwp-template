@@ -22,7 +22,9 @@ Die Texte sollen mit Markdown ausgezeichnet werden. Zum Übersetzen wird Pandoc 
 
 Diese Datei stellt lediglich die wichtigsten Konstrukte sowie einige Besonderheiten der _DARIAH Working Papers_ zusammen, für eine umfassende Dokumentation sei auf die o.g. Pandoc-Dokumentation verwiesen.
 
-## Text
+Es wird nicht von den AutorInnen erwartet, ein _camera-ready PDF_ abzuliefern. Wer die Umgebung zum Erzeugen der Artikel aufsetzen mag, findet im [Text zur Redaktionsumgebung](https://github.com/DARIAH-DE/dwp-template/blob/master/DWP-Redaktionsumgebung.pdf) Hinweise.
+
+# Text
 
 Markdown-Dateien sind einfache Textdateien so wie diese. Zeilenumbrüche werden wie Leerzeichen behandelt, für einen Absatzwechsel schreibt man eine Leerzeile in den Text.
 
@@ -32,7 +34,7 @@ _Kursivierungen_ werden erzeugt, indem man die zu kursivierenden Passagen `_mit 
 ## Überschrift zweiter Ebene
 ```
 
-### Listen
+## Listen
 
 Um eine Liste zu erzeugen, beginnt man eine Zeile mit einem Aufzählungszeichen: `*`, `-` oder `+`, gefolgt von einem Leerzeichen. Das Aufzählungszeihen darf bis zu drei Leerzeichen eingerückt sein. Einzelne Leerzeilen zwischen den Listeneinträgen sind erlaubt.
 
@@ -67,9 +69,15 @@ erzeugt
     * noch ein Eintrag,
     * weiterer Eintrag.
 
-### Code und Blockformate
+## Code und Blockformate
 
-Um inmitten eines Absatzes ein Stück Code in Festbreitenschrift zu formatieren, umschließt man das enstprechende Stück Code mit Backticks. Ganze Codeblöcke können entweder um vier Leerzeichen eingerückt werden oder – diese Variante empfehlen wir – mit Zeilen aus je drei Backticks umgeben werden. Unmittelbar hinter der einleitenden Backtickreihe kann der Sprachenname angegeben werden, um Syntax-Highlighting zu erreichen:
+Um inmitten eines Absatzes ein Stück Code in `Festbreitenschrift` zu formatieren, umschließt man das enstprechende Stück Code mit Backticks:
+
+```markdown
+inmitten eines Absatzes ein Stück Code in `Festbreitenschrift` zu formatieren,
+```
+
+Ganze Codeblöcke können entweder um vier Leerzeichen eingerückt werden oder – diese Variante empfehlen wir – mit Zeilen aus je drei Backticks umgeben werden. Unmittelbar hinter der einleitenden Backtickreihe kann der Sprachenname angegeben werden, um Syntax-Highlighting zu erreichen:
 
     ```python
     def foo():
@@ -83,11 +91,11 @@ def foo():
 
 Soll für Gedichte o.ä. der Zeilenfall erhalten bleiben, aber ansonsten normaler Text formatiert werden, beginnt man die Zeilen mit `| `. Zeilen mit Blockzitaten wird `> ` vorangestellt.
 
-### Formeln
+## Formeln
 
 Mathematische Formeln können in \LaTeX-Syntax eingegeben werden. Inline-Formeln wie in $x_i, i < n$ werden zwischen einfachen Dollarzeichen geschrieben: `$x_i, i < n$`. Für abgesetzte Formeln verwendet man doppelte Dollarzeichen: $$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$$
 
-### Bilder
+## Bilder
 
 Bilder sollten als PDF-, PNG- oder JPEG-Datei mitgeliefert werden. Sie werden über eine Bildreferenz eingebunden, die in einem eigenen Absatz stehen sollte (Leerzeile davor und danach):
 
@@ -113,9 +121,19 @@ Bei Gimp heißt die entsprechend Option _Print Size_. Alternativ sind Größenan
 ```![25% der Textbreite](img/Logo_Working-Papers.pdf){width=25%}
 ```
 
-### Links und Fußnoten
+Die Bilder werden über eine Heuristik an der Stelle der Einbindung, oben oder unten auf der aktuellen Seite oder einer der folgenden Seite, oder auf einer separaten, nur für Abbildungen vorgesehenen Seiten platziert. Falls alle Abbildungen am Ende des Dokuments in einem Anhang platziert werden sollen, so kann das Kommando `\floatappendix` benutzt werden, um die Platzierungseigenschaften entsprechend anzupassen:
 
-Verweise auf [Webseiten](https://de.dariah.eu/working-papers) bestehen i.d.R. aus einem Linktext in eckigen gefolgt von der vollständigen URL (mit http://!) in runden Klammern: `[Webseiten](https://de.dariah.eu/working-papers)`. Im Text wird der Linktext anklickbar, die URL kommt zusätzlich in eine Fußnote. Soll eine URL – wie <http://de.dariah.eu/> – im Text auftauchen, so setze man sie in spitze Klammern, sie wird dann zum Link, erzeugt jedoch keine Fußnote.
+```markdown
+\floatappendix
+
+## Abbildungen
+
+![Eines der ziemlich großen Bilder](img/some-image.pdf)
+```
+
+## Links und Fußnoten
+
+Verweise auf [Webseiten](https://de.dariah.eu/working-papers) bestehen i.d.R. aus einem Linktext in eckigen gefolgt von der vollständigen URL (mit http://!) in runden Klammern: `[Webseiten](https://de.dariah.eu/working-papers)`. Im Text wird der Linktext anklickbar, die URL kommt zusätzlich in eine Fußnote. Soll eine URL – wie <http://de.dariah.eu/> – im Text auftauchen, so setze man sie in spitze Klammern: `<http://de.dariah.eu/>`, sie wird dann zum Link, erzeugt jedoch keine Fußnote.
 
 Sonstige Fußnoten können wie im Beispiel inline^[dann aber ohne Absätze] oder separat[^bsp] gesetzt werden.
 
@@ -124,7 +142,8 @@ Sonstige Fußnoten können wie im Beispiel inline^[dann aber ohne Absätze] oder
     Es gilt die übliche vier-Leerzeichen-Einrückregel.
 
 ```markdown
-Sonstige Fußnoten können wie im Beispiel inline^[dann aber ohne Absätze] oder separat[^bsp] gesetzt werden.
+Sonstige Fußnoten können wie im Beispiel inline^[dann aber ohne Absätze] 
+oder separat[^bsp] gesetzt werden.
 
 [^bsp]: Separate Fußnoten können durchaus auch aus mehreren Absätzen bestehen.
     
@@ -132,9 +151,9 @@ Sonstige Fußnoten können wie im Beispiel inline^[dann aber ohne Absätze] oder
 ```
 Bei separaten Fußnoten kann das Fußnotenkürzel (hier `bsp`) beliebig gewählt werden, die Fußnote kann an einer beliebigen Stelle (in eigenem Absatz) gesetzt werden. Achtung: In Fußnoten sollten URLs nur in der `<>`-Form gesetzt werden, da Fußnoten in Fußnoten nicht unterstützt werden.
 
-## Bibliographie
+# Bibliographie
 
-Für die Bibliographie empfehlen wir, die Literaturverzeichnis-Einträge im BibLaTeX- oder BibTeX-Format in einer Datei mit gleichem Namen wie der Artikel und der Endung `.bib` zu verwalten und sich für die Zitationen an die entsprechenden [Pandoc-Konventionen](http://pandoc.org/MANUAL.html#citations) zu halten – in diesem Fall wird das Literaturverzeichnis automatisch einheitlich und entsprechend der Stilvorlagen formatiert.
+Für die Bibliographie empfehlen wir, die Literaturverzeichnis-Einträge __im BibLaTeX- oder BibTeX-Format__ in einer Datei mit gleichem Namen wie der Artikel und der Endung `.bib` zu verwalten und sich für die Zitationen an die entsprechenden [Pandoc-Konventionen](http://pandoc.org/MANUAL.html#citations) zu halten – in diesem Fall wird das Literaturverzeichnis automatisch einheitlich und entsprechend der Stilvorlagen formatiert. AutorInnen, die Ihre Literaturangaben in einem Freitextformat vorliegen haben, können z. B. einen Dienst wie [AnyStyle](https://anystyle.io) in Anspruch nehmen, um daraus eine BibTeX-Datei zu erzeugen. Das Literaturverzeichnis in Textform anzuliefern ist ebenfalls möglich, AutorInnen sind dann jedoch für Formatierung entsprechend der Richtlinien, Konsistenz und Sortierung selbst verantwortlich. 
 
 Wird ein solches automatisches Literaturverzeichnis verwendet, so muss der Artikel mit diesem Kommando enden:
 
@@ -144,23 +163,17 @@ Wird ein solches automatisches Literaturverzeichnis verwendet, so muss der Artik
 
 Das Kommando setzt automatisch die entsprechende Überschrift und passt die Formatierungsvorgaben an.
 
+Literaturverweise können dann jeweils unter Verwendung des Literaturverweisschlüssels aus der .bib-Datei z.B. auf die folgenden Weisen gesetzt werden:
 
-It is easily possible to include references [@hh2010]. To do so we recommend the following:
-
-1. Write or export your bibliography as a BibLaTeX database named alike your article – i. e. for `test.md`, it should be called `test.bib`.
-2. End your markdown document with a line that reads `\bibliography`.
-
-References to your bibliography can be written in a number of ways:
-
-* Easiest way is to write `[@hh2010]` [@hh2010]. 
-* You can also include prefixes and page references as in `[see @hh2010, p. 1]` [see @hh2010, p. 1].
-* Text references look like @hh2010a, without the brackets: `@hh2010a`
-* Multiple references share brackets [see, e. g., @hh2010; @hh2010a; @hh2010b]
-* "As Hagen [-@hh2010] says" is a common beginning for which the author of a citation can be suppressed
+* Im einfachsten Fall schreibt man `[@hh2010]` und erzeugt [@hh2010]. 
+* Präfixe und Seitenverweise sind möglich wie in `[vgl. @hh2010, S. 1]` [vgl. @hh2010, S. 1].
+* Textverweise ohne Klammern um den Autoren wie in @hh2010a werden ohne die eckigen Klammern geschrieben: `@hh2010a`
+* Mehrere Verweise teilen die eckigen Klammern: `[vgl. etwa @hh2010; @hh2010a; @hh2010b]` [vgl. etwa @hh2010; @hh2010a; @hh2010b]
+* Mit `-` kann man den Autor unterdrücken: "Wie Hagen [-@hh2010] schreibt, …" `Wie Hagen [-@hh2010] schreibt,`
 
 
 
-## Titeldaten
+# Titeldaten
 
 Titeldaten und einige Einstellungen gehören in einen Metadatenblock im YAML-Format. Der Block beginnt mit einer Zeile aus drei Bindestrichen `---` und endet mit einer Zeile aus drei Punkten `...`. Metadatenfelder beginnen mit dem Feldnamen am Anfang der Zeile, dann folgt ein Doppelpunkt und ein Leerzeichen und schließlich der Inhalt des Felds.
 
@@ -214,3 +227,5 @@ Für weitere Anmerkungen, die in einem eigenen Matadatenfeld ergänzt werden sol
 |-----------------------|--------------------------------------------------|
 | publish-note          | Zusätzliche Angaben (Freitext) z.B. für die Quellenangabe von Erstpublikationen, Konferenzbeiträge usw. |
 | urn-alt (optional)    | URN der Erstveröffentlichung |
+
+\biblio
