@@ -78,6 +78,37 @@ Eingabedatei ist nicht UTF-8-codiert. Im Texteditor öffnen und als UTF-8 speich
 1. TeX-Datei erzeugen lassen – das geht entweder auf die entsprechende Rückfrage oder mit `dwp -o article.tex article.md`
 2. TeX-Datei manuell mit LuaLaTeX übersetzen lassen: `lualatex article.tex`, Fehlermeldungen prüfen
 
+## Fehlermeldung wegen `\bibname`
+
+Metadatenfeld `lang: de` oder `lang: en` angeben!
+
+## `.bib` vorhanden und kein Literaturverzeichnis
+
+Heißt die `.bib` so wie die `.md`? 
+
+Wird auch wirklich zitiert, dh mit `@mueller2012` (entsprechend den Keys im `.bib`)? Siehe `DWP-Autorenhinweise.md` und `DWP-Autorenhinweise.bib`: Im `.md` muss `@Eijkhout1991` oder `[@Eijkhout1991]` stehen, um den u.a. Eintrag zu zitieren:
+
+```bibtex
+@BOOK{Eijkhout1991,
+  title = {\TeX\ by Topic. A \TeX nician's Reference},
+  publisher = {Addison-Wesley},
+  year = {1991},
+  author = {Victor Eijkhout},
+  address = {London},
+  keywords = {general},
+}
+```
+
+Literatur, die nicht in Pandoc-Syntax zitiert wird, landet auch nicht im Literaturverzeichnis.
+
+Wenn Autoren `.bib` anliefern, aber _nicht_ korrekt zitieren, kann man sich behelfen, indem man exakt folgenden Metadateneintrag zum YAML-Header hinzufügt:
+
+```yaml
+nocite: '@*'
+```
+In diesem Fall werden alle Einträge der `.bib`-Datei im Literaturverzeichnis gesetzt, auch solche, die nicht zitiert werden. Convenience-Features wie einheitliche Zitationskeys und Links von der Jahreszahl ins Literaturverzeichnis gehen damit natürlich nicht.
+
+
 # Umgang mit Dateien in Office-Formaten
 
 Wenn Dateien in Office-Formaten angeliefert werden empfiehlt sich folgender Workflow:
