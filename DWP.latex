@@ -9,6 +9,7 @@
 % ----------------------------- Ein paar Pakete, die wir später brauchen.
 % ----------------------------- Achtung: Läuft nur mit LuaLaTeX!
 \usepackage{amssymb,amsmath}
+\usepackage{mathpazo}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
 \usepackage{fontspec}
@@ -20,14 +21,10 @@ $endfor$
 $if(euro)$
   \newcommand{\euro}{€}
 $endif$
-% TODO in den Beispielen bislang war weder Code noch Mathe – Schriften mal ausprobieren
 $if(monofont)$
     \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$endif$]{$monofont$}
 $else$
     \setmonofont{Iosevka}[StylisticSet=8]
-$endif$
-$if(mathfont)$
-    \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
 $endif$
 $if(CJKmainfont)$
     \usepackage{xeCJK}
