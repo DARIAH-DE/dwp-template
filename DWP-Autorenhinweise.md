@@ -93,7 +93,7 @@ Soll für Gedichte o.ä. der Zeilenfall erhalten bleiben, aber ansonsten normale
 
 ## Formeln
 
-Mathematische Formeln können in \LaTeX-Syntax eingegeben werden. Inline-Formeln wie in $x_i, i < n$ werden zwischen einfachen Dollarzeichen geschrieben: `$x_i, i < n$`. Für abgesetzte Formeln verwendet man doppelte Dollarzeichen: $$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$$
+Mathematische Formeln können in \LaTeX-Syntax eingegeben werden. Inline-Formeln wie in $x_i, i < n$ werden zwischen einfachen Dollarzeichen geschrieben: `$x_i, i < n$`, das sollte aus Konsistenzgründen auch bei der Erwähnung von Variablen wie $n$ im Text geschehen. Für abgesetzte Formeln verwendet man doppelte Dollarzeichen: $$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$$
 
 ## Bilder
 
