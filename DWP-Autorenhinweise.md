@@ -192,7 +192,7 @@ Einige Felder (z. B. die Autorenliste) kann mehrere Werte aufnehmen. Dazu schr
         auf der Basis von Markdown, das mit Pandoc und LuaLatex formatiert wird.
 
         Dieser Artikel beschreibt die Installation und einige Spezifika der
-        Working-Paper-Vorlage; Details zur Markdown-Syntax findet man z. B. auf der
+        Working-Paper-Vorlage; Details zur Markdown-Syntax findet man z. B. auf der
         Pandoc-Homepage.
     ...
 
