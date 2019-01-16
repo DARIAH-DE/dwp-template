@@ -78,8 +78,8 @@ def run_pandoc(filename, args):
 
     if "-o" not in argnames:
         args.extend(["-o", pdfname])
-    if "--latex-engine" not in argnames:
-        args.append("--latex-engine=lualatex")
+    if "--pdf-engine" not in argnames:
+        args.append("--pdf-engine=lualatex")
     if "--template" not in argnames:
         args.append("--template=DWP")
 
