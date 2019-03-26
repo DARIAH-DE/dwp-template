@@ -296,6 +296,7 @@ $endif$
       \begin{minipage}[b]{\textwidth-7cm}
         \centering
         \licenseblurb
+        $if(guesteditor)$\par{}$guesteditor$$endif$
       \end{minipage}\hfill
       \includegraphics{BMBF_Logo}
   \end{minipage}}%

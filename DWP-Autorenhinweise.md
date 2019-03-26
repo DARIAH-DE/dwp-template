@@ -221,11 +221,12 @@ Für Texte, die zuvor als DARIAH-Report veröffentlicht worden sind, sollen die 
 | report-date           | Veröffentlichungszeitraum, z. B. `Dezember 2015` |
 | report-fkz (optional) | Förderkennzeichen                                |
 
-Für weitere Anmerkungen, die in einem eigenen Matadatenfeld ergänzt werden sollen, stehen folgende Felder zur Verfügung:
+Für weitere Anmerkungen, die in einem eigenen Metadatenfeld ergänzt werden sollen, stehen folgende Felder zur Verfügung:
 
 | Feld                  | Bedeutung                                        |
 |-----------------------|--------------------------------------------------|
 | publish-note          | Zusätzliche Angaben (Freitext) z.B. für die Quellenangabe von Erstpublikationen, Konferenzbeiträge usw. |
 | urn-alt (optional)    | URN der Erstveröffentlichung |
+| guesteditor           | Extratext zur Herausgeberschaft, erscheint unter den Herausgeberangaben |
 
 \biblio
