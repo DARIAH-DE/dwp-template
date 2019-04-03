@@ -108,6 +108,17 @@ nocite: '@*'
 ```
 In diesem Fall werden alle Einträge der `.bib`-Datei im Literaturverzeichnis gesetzt, auch solche, die nicht zitiert werden. Convenience-Features wie einheitliche Zitationskeys und Links von der Jahreszahl ins Literaturverzeichnis gehen damit natürlich nicht.
 
+## Schwieriges \LaTeX
+
+Im Prinzip kann man einfache \LaTeX-Kommandos und -Umgebungen direkt ins Markdown schreiben. Wenn das nicht klappt, muss man Pandoc sagen, dass ein entsprechender Abschnitt rohes TeX ist. Dazu verwendet man die [Raw-Attribute](https://pandoc.org/MANUAL.html#extension-raw_attribute)-Funktion: Man schreibt einen Codeblock und unmittelbar dahinter `{=latex}`, also für größere Blöcke
+
+    ```{=latex}
+    \begin{tabular}{ll}
+       \begin{tabular}{l} foo \\ bar \end{tabular} & x \\
+    \end{tabular}
+    ```
+
+
 
 # Umgang mit Dateien in Office-Formaten
 
