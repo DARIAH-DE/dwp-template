@@ -196,7 +196,7 @@ $endif$
 \let\orighref\href
 \let\origfootnote\footnote
 \newcommand\visiblehref[2]{\orighref{#1}{\color{dwp-darkblue}\setulcolor{dwp-darkblue}\ul{#2}}}
-\renewcommand{\href}[2]{\visiblehref{#1}{#2}\origfootnote{\url{#1}}}
+\newcommand\footnotehref[2]{\visiblehref{#1}{#2}\origfootnote{\url{#1}}}
 $if(strikeout)$
 \usepackage[normalem]{ulem}
 % avoid problems with \sout in headers with hyperref:
@@ -322,6 +322,7 @@ $if(abstract)$
 $abstract$
 $endif$
 
+\let\href\footnotehref
 
 $if(keywords-de)$
 \section*{Schlagwörter}

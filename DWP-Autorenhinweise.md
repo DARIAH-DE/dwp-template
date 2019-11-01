@@ -5,7 +5,7 @@ author:
 - Thorsten Vitt
 - Mirjam Blümm
 lang: de
-date: 2016
+date: 2016–2019
 abstract: |
     Für die Publikation der DARIAH-Working-Papers gibt es einen Workflow
     auf der Basis von Markdown, das mit Pandoc und LuaLatex formatiert wird.
@@ -14,6 +14,9 @@ abstract: |
     Working-Paper-Vorlage; Details zur Markdown-Syntax findet man z. B. auf der
     Pandoc-Homepage.
 wpno: 0
+publish-note: |
+    Der aktuellste Stand dieser Datei ist immer im Github-Repository des Templates
+    [DARIAH-DE/dwp-template](https://github.com/DARIAH-DE/dwp-template) zu finden.
 ...
 
 # Artikel schreiben
