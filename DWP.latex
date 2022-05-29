@@ -166,7 +166,7 @@ $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
 $if(tables)$
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
 \renewcommand{\arraystretch}{1.5}
 $endif$
 %--------------- Floats wie Bilder und Tabellen
