@@ -201,20 +201,21 @@ Einige Felder (z. B. die Autorenliste) kann mehrere Werte aufnehmen. Dazu schr
 
 Die folgenden Metadatenfelder stehen zur Verfügung:
 
-| Feld                  | Bedeutung                                                     |
-|-----------------------|---------------------------------------------------------------|
-| title                 | Titel des Artikels.                                           |
-| subtitle (optional)   | Untertitel.                                                   |
-| lang                  | Sprache, in der der Artikel verfasst ist: `de` oder `en`.     |
-| author                | Autor des Artikels. Bei mehreren Autoren Liste verwenden.     |
-| longauthor (optional) | Autoren mit Fußnotenzeichen für Institute                     |
-| institute             | Institut(e), ggf. mit Fußnotenzeichen (Liste möglich)         |
-| date                  | Veröffentlichungsjahr                                         |
-| abstract              | Zusammenfassung                                               |
-| keywords-de           | Schlagwörter auf Deutsch (als Liste)                          |
-| keywords-en           | Schlagwörter auf Englisch (als Liste)                         |
-| wpno                  | DARIAH-Working-Papers Nr. (wird von der Redaktion eingesetzt) |
-| urn                   | URN (wird von der Redaktion eingesetzt)                       |
+| Feld                  | Bedeutung                                                                |
+|-----------------------|--------------------------------------------------------------------------|
+| title                 | Titel des Artikels.                                                      |
+| subtitle (optional)   | Untertitel.                                                              |
+| lang                  | Sprache, in der der Artikel verfasst ist: `de` oder `en`.                |
+| author                | Autor des Artikels. Bei mehreren Autoren Liste verwenden.                |
+| longauthor (optional) | Autoren mit Fußnotenzeichen für Institute                                |
+| institute             | Institut(e), ggf. mit Fußnotenzeichen (Liste möglich)                    |
+| date                  | Veröffentlichungsjahr                                                    |
+| abstract              | Zusammenfassung                                                          |
+| keywords-de           | Schlagwörter auf Deutsch (als Liste)                                     |
+| keywords-en           | Schlagwörter auf Englisch (als Liste)                                    |
+| wpno                  | DARIAH-Working-Papers Nr. (wird von der Redaktion eingesetzt)            |
+| doi                   | DOI (wird von der Redaktion eingesetzt)                                  |
+| urn                   | URN (wird von der Redaktion eingesetzt; ignoriert, falls `doi` vorhanden |
 
 Für Texte, die zuvor als DARIAH-Report veröffentlicht worden sind, sollen die folgenden Metadaten ergänzt werden:
 

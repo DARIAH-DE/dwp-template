@@ -297,7 +297,7 @@ $endif$
         $for(author)$$author$$sep$, $endfor$: \enquote{$title$}. 
         \emph{\visiblehref{https://de.dariah.eu/working-papers}{DARIAH-DE Working Papers}} \numbername~$if(wpno)$$wpno$$else$\todo{wpno}$endif$. 
         Göttingen: DARIAH-DE, $if(date)$$date$$else$\todo{date}$endif$.
-        URN:~$if(urn)$\visiblehref{http://nbn-resolving.org/$urn$}{$urn$}$else$\todo{urn}$endif$.%
+        $if(doi)$DOI:~\visiblehref{https://doi.org/$doi$}{$doi$}$elseif(urn)$URN:~\visiblehref{http://nbn-resolving.org/$urn$}{$urn$}$else$\todo{doi}$endif$.%
       }\par
       \medskip
       \includegraphics{CC-BY_icon}\hfill
