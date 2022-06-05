@@ -83,7 +83,7 @@ def run_pandoc(filename, args):
     if "--template" not in argnames:
         args.append("--template=DWP")
 
-    args.append("--filter=pandoc-citeproc")
+    args.append("--citeproc")
     if os.path.exists(basename + ".bib"):
         args.append("--bibliography="+basename+".bib")
 
