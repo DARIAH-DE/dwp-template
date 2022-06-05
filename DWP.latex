@@ -94,13 +94,22 @@ $endif$
 
 %------------ Sprachdefinitionen etc. Möglichst so lassen.
 $if(lang)$
-\usepackage[base]{babel} %% FIXME workaround for https://github.com/reutenauer/polyglossia/issues/129
-\usepackage{polyglossia}
-\setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
-$for(polyglossia-otherlangs)$
-\setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
-$endfor$
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+$if(babel-lang)$
+\babelprovide[main,import]{$babel-lang$}
 $endif$
+$for(babel-otherlangs)$
+\babelprovide[import]{$babel-otherlangs$}
+$endfor$
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+$endif$
+
 $if(natbib)$
 \usepackage{natbib}
 \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
