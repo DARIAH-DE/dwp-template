@@ -124,10 +124,27 @@ $endif$
 $if(csl-refs)$
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
-\newenvironment{cslreferences}%
-  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
-  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
-  {\par}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 $endif$
 %------------- Programmausschnitte. Noch testen.
 $if(listings)$
@@ -329,34 +346,34 @@ $endif$
 \begin{document}
 $if(draft)$$else$
 $if(title)$
-\maketitle
+	\maketitle
 $endif$
 
-%---------------------------- Zweite Seite der Titelei: abstract, keywords-de, keywords-en
+	%---------------------------- Zweite Seite der Titelei: abstract, keywords-de, keywords-en
 
 $if(abstract)$
-\section*{\abstractname}
+	\section*{\abstractname}
 $abstract$
 $endif$
 
-\let\href\footnotehref
+	\let\href\footnotehref
 
 $if(keywords-de)$
-\section*{Schlagwörter}
+	\section*{Schlagwörter}
 $for(keywords-de)$$keywords-de$$sep$, $endfor$
 $else$
 $if(keywords)$
-\todo{Please provide English and German keywords in fields keywords-de and keywords-en.}
+	\todo{Please provide English and German keywords in fields keywords-de and keywords-en.}
 $endif$
 $endif$
 
 
 $if(keywords-en)$
-\section*{Keywords}
+	\section*{Keywords}
 $for(keywords-en)$$keywords-en$$sep$, $endfor$
 $else$
 $if(keywords)$
-\todo{Please provide English and German keywords in fields keywords-de and keywords-en.}
+	\todo{Please provide English and German keywords in fields keywords-de and keywords-en.}
 $endif$
 $endif$
 
@@ -365,33 +382,33 @@ $include-before$
 
 $endfor$
 
-%---------------------------- Dritte Seite der Titelei: Inhaltsverzeichnis
-\clearpage
-{
-$if(colorlinks)$
-\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
-$endif$
-\setcounter{tocdepth}{$toc-depth$}
-\tableofcontents
-}
+	%---------------------------- Dritte Seite der Titelei: Inhaltsverzeichnis
+	\clearpage
+	{
+		$if(colorlinks)$
+		\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+		$endif$
+		\setcounter{tocdepth}{$toc-depth$}
+		\tableofcontents
+	}
 $if(lot)$
-\listoftables
+	\listoftables
 $endif$
 $if(lof)$
-\listoffigures
+	\listoffigures
 $endif$
 
 $endif$
-%---------------------------- Bibliographie vorbereiten
-% Am Ende jeder Datei mit Literaturverzeichnis sollte das hier stehen:
-\newcommand{\biblio}{%
-  \clearpage
-  \addsec{\bibname}
-  \let\href\visiblehref%
-}
+	%---------------------------- Bibliographie vorbereiten
+	% Am Ende jeder Datei mit Literaturverzeichnis sollte das hier stehen:
+	\newcommand{\biblio}{%
+		\clearpage
+		\addsec{\bibname}
+		\let\href\visiblehref%
+	}
 
-%---------------------------- Jetzt geht's los ...
-\cleardoublepage
+	%---------------------------- Jetzt geht's los ...
+	\cleardoublepage
 
 $body$
 
@@ -400,17 +417,17 @@ $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
 $if(book-class)$
-\renewcommand\bibname{$biblio-title$}
+	\renewcommand\bibname{$biblio-title$}
 $else$
-\renewcommand\refname{$biblio-title$}
+	\renewcommand\refname{$biblio-title$}
 $endif$
 $endif$
-\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+	\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
 
 $endif$
 $endif$
 $if(biblatex)$
-\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+	\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
 
 $endif$
 $for(include-after)$
