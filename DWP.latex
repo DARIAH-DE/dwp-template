@@ -94,11 +94,7 @@ $endif$
 
 %------------ Sprachdefinitionen etc. Möglichst so lassen.
 $if(lang)$
-\ifLuaTeX
-\usepackage[bidi=basic]{babel}
-\else
 \usepackage[bidi=default]{babel}
-\fi
 $if(babel-lang)$
 \babelprovide[main,import]{$babel-lang$}
 $endif$
