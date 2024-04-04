@@ -283,7 +283,7 @@ $if(author)$
 \author{$for(author)$$author$$sep$ \and $endfor$}
 $endif$
 $endif$
-\date{$if(institute)$$for(institute)$$institute$$sep$\\ $endfor$ $endif$}
+\date{$if(institute)$$for(institute)$\mbox{$institute$}$sep$\hspace{2em} $endfor$ $endif$}
 \publishers{%
   \centerline{\includegraphics{Logo_Working-Papers.pdf}}%
 }
