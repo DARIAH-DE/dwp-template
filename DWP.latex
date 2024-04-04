@@ -293,7 +293,7 @@ $endif$
 }}%
 \newcommand{\numbername}{No.}
 \newcommand{\licenseblurb}{%
-        This article is published under the \\
+        This paper is published under the \\
         licence \visiblehref{http://creativecommons.org/licenses/by/4.0/}{Creative-Commons Attribution 4.0}~(CC-BY).
         \par\smallskip
         The \emph{DARIAH-DE Working Papers} are published by Mirjam Blümm,
