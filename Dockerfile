@@ -9,6 +9,6 @@ COPY dwp.py /usr/local/bin
 RUN apk add --update fontconfig font-iosevka-base font-urw-base35 python3
 COPY fonts/*.ttc /usr/share/fonts
 RUN  tlmgr install koma-script palatino mathpazo; \
-  luaotfload-tool --update --force -vvv
+  luaotfload-tool --update -vvv
 
 ENTRYPOINT ["/usr/local/bin/dwp.py"]

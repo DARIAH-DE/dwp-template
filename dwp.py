@@ -1,139 +1,134 @@
 #!/usr/bin/env python3
 
-from subprocess import call
-try:
-    from readchar import readkey
-except ImportError:
-    readkey = input
-import sys
-import os
-import platform
+from os import fspath
+
+import shutil
+from subprocess import run
+from pathlib import Path
+from shutil import which
+import shlex
 import re
+import sys
 
 
-def yn(*prompt, default=True):
-    """
-    Prompts the user to answer a yes/no question.
+def run_pandoc(file: Path | str, args: list[str]) -> int:
+    file = Path(file)
+    argnames = [arg.split("=")[0] for arg in args]
+    pandoc = which("pandoc") or "pandoc"
+    args = [pandoc] + args
 
-    Args:
-        *prompt: List of arguments that form a prompt. Passed on to `print`.
-        default (bool): Yes or no when the user hits enter?
+    markdown_file = file if file.suffix == ".md" else file.with_suffix(".md")
+    if file != markdown_file and file.exists():
+        # Passing, e.g., a docx starts a conversion unless the markdown already exists
+        if not markdown_file.exists():
+            print(
+                f"{markdown_file} does not exist, trying to create it from {file} ..."
+            )
+            cmd = [
+                pandoc,
+                "-t",
+                "markdown",
+                "-o",
+                fspath(markdown_file),
+                "--extract-media=.",
+                fspath(file),
+            ]
+            print(shlex.join(cmd))
+            result = run(cmd)
+            if not markdown_file.exists():
+                print(f"Could not create markdown source {markdown_file}")
+                return result.returncode or 127
 
-    Returns:
-        (bool) The user's choice.
+    if not markdown_file.exists():
+        print(f"Markdown source {markdown_file} not found.")
+        return 127
 
-    Raises:
-        `KeyboardInterrupt` when the user has pressed Ctrl+C
-    """
-    if default:
-        options = " [Y/n]? "
-    else:
-        options = " [y/N]? "
+    pdf_file = markdown_file.with_suffix(".pdf")
 
-    accept = "yYjJ"
-    reject = "nN\x1b\x07"          # Esc, ^G
-    default_keys = " \r"           # Space, Return
-
-    print(*prompt, end=options, flush=True)
-    while True:
-        inp = readkey()
-        key = inp[0] if inp else default_keys[0]
-
-        if key in accept or default and key in default_keys:
-            print(accept[0])
-            return True
-        elif key in reject or not default and key in default_keys:
-            print(reject[0])
-            return False
-        elif key == "\x03": # ^C
-            raise KeyboardInterrupt()
-        else:
-            print(key, "\x08", sep="", end="", flush=True)
-
-
-def run_file(filename):
-    if platform.system() == 'Linux':
-        call(["xdg-open", filename])
-    elif platform.system() == 'Windows':
-        os.startfile(filename)
-    else:
-        call(["open", filename])
-
-
-def run_pandoc(filename, args):
-    """
-    Runs pandoc with appropriate arguments.
-
-    Args:
-        filename (str): The input file to run pandoc on
-        args: Iterable with additional arguments to pass to pandoc.
-
-    Returns:
-        (int) pandoc's exit code
-    """
-    args = ["pandoc"] + args
-    argnames = [arg.split('=')[0] for arg in args]
-    basename, extension = os.path.splitext(filename)
-    pdfname = basename + '.pdf'
-
-    if "-o" not in argnames:
-        args.extend(["-o", pdfname])
+    if "-o" not in argnames and "--output" not in argnames:
+        args.extend(["-o", fspath(pdf_file)])
     if "--pdf-engine" not in argnames:
         args.append("--pdf-engine=lualatex")
     if "--template" not in argnames:
         args.append("--template=DWP")
 
     args.append("--citeproc")
-    if os.path.exists(basename + ".bib"):
-        args.append("--bibliography="+basename+".bib")
-
-    # find language & csl
+    bibfile = markdown_file.with_suffix(".bib")
+    if bibfile.exists():
+        args.append("--bibliography=" + fspath(bibfile))
     if "--csl" not in argnames:
-        with open(filename, encoding="utf8") as f:
-            langtag = re.search(r'^lang:\s*(\w+)\s*$', f.read(), re.M)
-            if langtag:
-                if langtag.group(1) == 'de':
-                    csl = os.path.expanduser('~/.pandoc/templates/chicago-author-date-de.csl')
-                else:
-                    csl = os.path.expanduser('~/.pandoc/templates/chicago-author-date.csl')
-                if os.path.exists(csl):
-                    args.append("--csl="+csl)
-                else:
-                    print("Not found:", csl)
+        if langtag := re.search(r"^lang:\s*(\w+)\s*$", markdown_file.read_text(), re.M):
+            if langtag.group(1) == "de":
+                args.append("--csl=chicago-author-date-de.csl")
             else:
-                print("Warning: No lang entry found")
+                args.append("--csl=chicago-author-date.csl")
+        else:
+            print(
+                "Warning: Document language unknown, use a header field like 'lang: en'"
+            )
+            args.append("--csl=chicago-author-date.csl")
+    args.append("--metadata=link-citations:true")
+    if "-v" in argnames:
+        args.remove("-v")
+        args.append("--verbose")
+    debug = False
+    if "-D" in args:
+        args.remove("-D")
+        debug = True
+    if "--debug" in args:
+        args.remove("--debug")
+        debug = True
 
-    args.append('--metadata=link-citations:true')
-    args.append(filename)
+    args.append(fspath(markdown_file))
 
-    print(" ".join(args))
-    result = call(args)
-    return result
+    print(shlex.join(args))
+    result = run(args)
+    if result.returncode != 0:
+        print(f"pandoc failed with exit code {result.returncode}.")
+        tex_file = markdown_file.with_suffix(".tex")
+        if debug:
+            if "-o" in args:
+                args[args.index("-o") + 1] = fspath(tex_file)
+            elif "--output" in argnames:
+                args[argnames.index("--output") + 1] = "--output=" + fspath(tex_file)
+            print(f"Running {shlex.join(args)} to generate {tex_file} ...")
+            run(args)
+            if tex_file.exists():
+                cmdline = [shutil.which("lualatex"), fspath(tex_file)]
+                print(f"Running {shlex.join(cmdline)} to debug LaTeX execution ...")
+                run(cmdline)
+            else:
+                print("No tex file created.")
+        else:
+            print(
+                f"""
+                  To debug, you can add the option -D or --debug somewhere before the 
+                  markdown file name. This will create the tex file and run lualatex
+                  manually, so you get all intermediate files in the current directory.
+                  It's your responsibility to delete them later ...
 
-
-def main(argv):
-    if argv is None:
-        argv = []
-    if len(argv) < 2:
-        print("Usage: {} filename".format(argv[0]))
-        sys.exit(1)
-
-    filename = argv[-1]
-    basename, extension = os.path.splitext(filename)
-    if extension == "":
-        filename = filename + ".md"
-        extension = ".md"
-
-    if os.path.exists(filename):
-        if run_pandoc(filename, argv[1:-1]) == 0:
-            if yn("Show PDF?"):
-                run_file(basename + ".pdf")
-        elif yn("Generate .tex for debugging?"):
-            run_pandoc(filename, ["-o", basename + ".tex"] + argv[1:-1])
+                  Alternatively, use -o "{tex_file}" to create only a tex file.
+                  """
+            )
     else:
-        print("ERROR:", filename, "not found.")
-        sys.exit(1)
+        if pdf_file.exists():
+            print(f"PDF file {fspath(pdf_file)} has been created.")
+    return result.returncode
+
+
+def usage(msg: str = ""):
+    if msg:
+        print(msg)
+    print(f"Usage: {sys.argv[0]} [--debug] [-v] [pandoc-options] input-file")
+    sys.exit(1)
 
 
 if __name__ == "__main__":
-    main(sys.argv)
+    if len(sys.argv) < 2:
+        usage()
+
+    input_file = Path(sys.argv[-1])
+    if not input_file.exists():
+        usage(f"Input file {input_file} not found")
+
+    sys.exit(run_pandoc(input_file, sys.argv[1:-1]))

@@ -1,7 +1,8 @@
 ---
 title: DARIAH Working Paper Workflow
 subtitle: Redaktionsumgebung – Work in Progress
-author: 
+author:
+
 - Thorsten Vitt
 - Mirjam Blümm
 lang: de
@@ -14,29 +15,44 @@ abstract: |
 wpno: 0
 ...
 
+# Docker-basierte Redaktionsumgebung aufsetzen
 
-# Voraussetzungen
+Es gibt eine experimentelle Redaktionsumgebung in einem Dockercontainer, in dem bereits alles verpackt wurde, um aus einer DWP-Markdowndatei ein fertiges Working-Paper-PDF zu erzeugen (Pandoc, LaTeX, Vorlage, Schriften etc.). Docker kann auf dem Mac z.B. mit `brew cask install docker` installiert werden.
 
-* Pandoc
-* LaTeX-Installation mit LuaLaTeX, z.B. aktuelles TeX-Live
-* pandoc-citeproc (für das Literaturverzeichnis-Processing)
-* Python 3 (für das Convenience-Skript)
+Um damit eine Markdown-Datei `Artikel.md` im aktuellen Verzeichnis zu übersetzen, kann man folgendes Kommando verwenden:
 
-# Installation
+```sh
+docker run -it -u "$(id -u):$(id -g)" -v "$(pwd)":/data thvitt/dwp-template Artikel.md 
+```
+
+Zur Erläuterung: `docker run` führt einen Dockercontainer aus.  Beim ersten mal wird das Image dabei heruntergeladen. `-it` führt zum interaktiven Betrieb, sodass Meldungen sofort angezeigt werden. `-u "$(id -u):$(id -g)"` bewirkt, dass der Container mit dem aktiven Benutzer ausgeführt wird – ansonsten gehören die Dateien hinterher möglicherweise root. `-v "$(pwd)":/data` stellt dem Docker-Container das aktuelle Verzeichnis (`$(pwd)`) zur Verfügung, sodass es darin schreiben kann. `thvitt/dwp-template` ist der Name des Images, und alle darauffolgenden Parameter werden dem dwp-Skript (s.u.) bzw. Pandoc übergeben.
+
+Ich empfehle, das kurze Shellskript [ddwp](ddwp) herunterzuladen, ausführbar zu machen und in den $PATH zu legen, dann muss man nurnoch `ddwp Artikel.md`  tippen.
+
+# manuelle Redaktionsumgebung aufsetzen
+
+Wer nicht mit der Docker-Umgebung arbeiten mag, muss ein wenig manuell installieren:
+
+## Voraussetzungen
+
+- Pandoc
+- LaTeX-Installation mit LuaLaTeX, z.B. aktuelles TeX-Live
+- pandoc-citeproc (für das Literaturverzeichnis-Processing)
+- Python 3 (für das Convenience-Skript)
+
+## Installation
 
 (Es gibt ein einfaches, experimentelles Installationsscript `install.sh`, das auf Linux und MacOS X funktionieren sollte.)
 
 Die Schriften [WeblySleek UI](http://www.dafont.com/weblysleek-ui.font) und [Iosevka in der Default-Variante (Download `01-*`)](https://be5invis.github.io/Iosevka/)
 entsprechend dem Betriebssystem installieren. Für übliche Linux-Distributionen ist es ausreichend, die TTF-Dateien in den Ordner `~/.fonts` zu legen.
 
-
-
 Einige Dateien aus diesem Verzeichnis müssen über das Dateisystem verteilt werden. Ich empfehle, die entsprechenden Dateien per symbolischem Link zu verlinken statt sie zu kopieren, um für Aktualisierungen gerüstet zu sein:
 
-* __DWP.latex__ ist das Pandoc-Template, es muss in das Verzeichnis `~/.pandoc/templates`.
-* Die __`*.csl`-Dateien__ sind die Styles für die Literaturverwaltung, sie stammen aus dem [Zotero Style Repository](https://www.zotero.org/styles?q=chicago&format=author-date). `dwp.py` sucht diese Styles ebenfalls im Verzeichnis `~/.pandoc/templates`
-* Die Bilder aus dem `img`-Ordner werden für die Titelseite benötigt. Sie werden in einem LaTeX-Baum gesucht.
-* `dwp.py` ist ein Script zum einfachen Aufrufen von Pandoc mit entsprechenden Parametern. Es sollte irgendwo in den `$PATH`.
+- __DWP.latex__ ist das Pandoc-Template, es muss in das Verzeichnis `~/.pandoc/templates`.
+- Die __`*.csl`-Dateien__ sind die Styles für die Literaturverwaltung, sie stammen aus dem [Zotero Style Repository](https://www.zotero.org/styles?q=chicago&format=author-date). `dwp.py` sucht diese Styles ebenfalls im Verzeichnis `~/.pandoc/templates`
+- Die Bilder aus dem `img`-Ordner werden für die Titelseite benötigt. Sie werden in einem LaTeX-Baum gesucht.
+- `dwp.py` ist ein Script zum einfachen Aufrufen von Pandoc mit entsprechenden Parametern. Es sollte irgendwo in den `$PATH`.
 
 Unter der Annahme, dass dieses Verzeichnis unter `~/projects/dwp-template` liegt:
 
@@ -53,19 +69,27 @@ sudo ln -s ~/projects/dwp-template .
 
 Nach erfolgreicher Installation sollte es in jedem Verzeichnis möglich sein, mit `dwp datei.md` die entsprechende Datei in PDF zu übersetzen.
 
-# Benutzung
+# Benutzung beider Umgebungen
 
-Das beigefügte Skript `dwp.py` kann einfach mit `dwp artikeldatei.md` aufgerufen werden. Es ruft Pandoc mit den richtigen Parametern auf, um `artikeldatei.pdf` zu erzeugen. Das kann dann z. B. so aussehen:
+Das beigefügte Pythonskript `dwp.py` ist der Einstiegspunkt des Dockercontainers und kann auch in der manuellen Installation aufgerufen werden. Es ist ein kleiner Wrapper um Pandoc, der versucht, pandoc mit den richtigen Parametern aufzurufen. Benutzung, hier in der oben empfohlenen Dockervariante als ddwp:
 
-```bash
-pandoc -o article.pdf --latex-engine=lualatex --template=DWP \
-       --filter=pandoc-citeproc --bibliography=article.bib \
-       --csl=$HOME/.pandoc/templates/chicago-author-date.csl \
-       --metadata=link-citations:true \
-       article.md
-```
+Der Standard-Aufruf ist `ddwp Artikeldatei.md`, wenn alles gut geht wird dann `Artikeldatei.pdf` erzeugt. Wichtig ist, dass die Eingabedatei immer das _letzte Argument_ ist, Optionen aller Art müssen _vor_ der Artikeldatei eingefügt werden. Folgende Optionen stehen zur Verfügung:
 
-`dwp` kann auch mit weiteren Pandoc-Parametern aufgerufen werden, es reicht alle Parameter an Pandoc weiter und lässt dafür ggf. die selbst generierten Versionen weg.
+- `--debug` oder `-D` hat nur Auswirkungen, wenn beim Übersetzen etwas schief geht; in diesem Falle wird mit pandoc eine `.tex`-Datei erzeugt und diese einmal durch lualatex laufen gelassen, sodass .tex-, .log- und sonstige Hilfsdateien entstehen und analysiert werden können.
+
+- `-o Artikeldatei.tex` erzeugt einfach die .tex-Datei, ohne LaTeX-Lauf.
+
+- `-v` oder `--verbose` lässt pandoc ausführlichere Meldungen ausgeben.
+
+- Beliebige Pandoc-Optionen können eingefügt werden.
+
+## Wenn keine Markdown-Datei vorhanden ist (Word-Workflow)
+
+... dann rufe man zunächst `ddwp Artikeldatei.docx` auf. Dies konvertiert (mit Pandoc) die Artikeldatei nach Markdown (und versucht dann gleich, sie zu übersetzen, sodass man schonmal eine Vorschau bekommt). Danach arbeitet man dann mit der Markdown-Datei `Artikeldatei.md` weiter und gibt auch die beim ddwp-Aufruf an.
+
+Achtung: Eingebettete Dateien etc. werden in ein Unterverzeichnis `media` des aktuellen Verzeichnisses gepackt.
+
+Für LibreOffice-Dateien kann es sinnvoll sein, die zunächst in LibreOffice nach DOCX zu konvertieren, da da ggf. die Pandoc-Unterstützung besser ist – am besten beides ausprobieren.
 
 # Troubleshooting
 
@@ -75,8 +99,7 @@ Eingabedatei ist nicht UTF-8-codiert. Im Texteditor öffnen und als UTF-8 speich
 
 ## PDF-Datei kann nicht erzeugt werden, keine ordentliche Fehlermeldung
 
-1. TeX-Datei erzeugen lassen – das geht entweder auf die entsprechende Rückfrage oder mit `dwp -o article.tex article.md`
-2. TeX-Datei manuell mit LuaLaTeX übersetzen lassen: `lualatex article.tex`, Fehlermeldungen prüfen
+`dwp --debug Artikeldatei.md` erzeugt tex und lässt es mit LuaLaTeX laufen, ggf. sieht man dann mehr Fehlerursachen.
 
 ## Fehlermeldung wegen `\bibname`
 
@@ -84,7 +107,7 @@ Metadatenfeld `lang: de` oder `lang: en` angeben!
 
 ## `.bib` vorhanden und kein Literaturverzeichnis
 
-Heißt die `.bib` so wie die `.md`? 
+Heißt die `.bib` so wie die `.md`?
 
 Wird auch wirklich zitiert, dh mit `@mueller2012` (entsprechend den Keys im `.bib`)? Siehe `DWP-Autorenhinweise.md` und `DWP-Autorenhinweise.bib`: Im `.md` muss `@Eijkhout1991` oder `[@Eijkhout1991]` stehen, um den u.a. Eintrag zu zitieren:
 
@@ -106,6 +129,7 @@ Wenn Autoren `.bib` anliefern, aber _nicht_ korrekt zitieren, kann man sich behe
 ```yaml
 nocite: '@*'
 ```
+
 In diesem Fall werden alle Einträge der `.bib`-Datei im Literaturverzeichnis gesetzt, auch solche, die nicht zitiert werden. Convenience-Features wie einheitliche Zitationskeys und Links von der Jahreszahl ins Literaturverzeichnis gehen damit natürlich nicht.
 
 ## Schwieriges \LaTeX
@@ -117,15 +141,3 @@ Im Prinzip kann man einfache \LaTeX-Kommandos und -Umgebungen direkt ins Markdow
        \begin{tabular}{l} foo \\ bar \end{tabular} & x \\
     \end{tabular}
     ```
-
-
-
-# Umgang mit Dateien in Office-Formaten
-
-Wenn Dateien in Office-Formaten angeliefert werden empfiehlt sich folgender Workflow:
-
-1. OpenOffice-Dateien nach DOCX konvertieren, die Pandoc-Unterstützung von DOCX ist besser
-2. `pandoc -o article.md --extract-media=article_assets article.docx`. Erzeugt aus der Worddatei eine Markdown-Datei namens `article.md`, extrahiert die Bilder und speichert sie im Verzeichnis `article_assets` (wird ggf. angelegt)
-3. Markdown-Datei nachbearbeiten
-
-Vorteil: Bilder werden gleich ausgepackt, Grundformatierungen bleiben erhalten
