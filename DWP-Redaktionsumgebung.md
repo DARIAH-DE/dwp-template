@@ -22,10 +22,10 @@ Es gibt eine experimentelle Redaktionsumgebung in einem Dockercontainer, in dem 
 Um damit eine Markdown-Datei `Artikel.md` im aktuellen Verzeichnis zu übersetzen, kann man folgendes Kommando verwenden:
 
 ```sh
-docker run -it -u "$(id -u):$(id -g)" -v "$(pwd)":/data thvitt/dwp-template Artikel.md 
+docker run -it -u "$(id -u):$(id -g)" -v "$(pwd)":/data --rm thvitt/dwp-template Artikel.md 
 ```
 
-Zur Erläuterung: `docker run` führt einen Dockercontainer aus.  Beim ersten mal wird das Image dabei heruntergeladen. `-it` führt zum interaktiven Betrieb, sodass Meldungen sofort angezeigt werden. `-u "$(id -u):$(id -g)"` bewirkt, dass der Container mit dem aktiven Benutzer ausgeführt wird – ansonsten gehören die Dateien hinterher möglicherweise root. `-v "$(pwd)":/data` stellt dem Docker-Container das aktuelle Verzeichnis (`$(pwd)`) zur Verfügung, sodass es darin schreiben kann. `thvitt/dwp-template` ist der Name des Images, und alle darauffolgenden Parameter werden dem dwp-Skript (s.u.) bzw. Pandoc übergeben.
+Zur Erläuterung: `docker run` führt einen Dockercontainer aus.  Beim ersten mal wird das Image dabei heruntergeladen. `-it` führt zum interaktiven Betrieb, sodass Meldungen sofort angezeigt werden. `-u "$(id -u):$(id -g)"` bewirkt, dass der Container mit dem aktiven Benutzer ausgeführt wird – ansonsten gehören die Dateien hinterher möglicherweise root. `-v "$(pwd)":/data` stellt dem Docker-Container das aktuelle Verzeichnis (`$(pwd)`) zur Verfügung, sodass es darin schreiben kann. `--rm` löscht den Container (aber nicht die heruntergeladen Images) nach Gebrauch wieder. `thvitt/dwp-template` ist der Name des Images, und alle darauffolgenden Parameter werden dem dwp-Skript (s.u.) bzw. Pandoc übergeben.
 
 Ich empfehle, das kurze Shellskript [ddwp](ddwp) herunterzuladen, ausführbar zu machen und in den $PATH zu legen, dann muss man nurnoch `ddwp Artikel.md`  tippen.
 
